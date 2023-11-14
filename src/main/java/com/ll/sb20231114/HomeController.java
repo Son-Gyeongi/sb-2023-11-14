@@ -19,4 +19,16 @@ public class HomeController {
     String showAbout() {
         return "개발자 커뮤니티";
     }
+
+    @GetMapping("/calc") // /calc?a=10&b=20
+    @ResponseBody
+    String showCalc(int a, int b) { // 매개변수에 아무값이 안들어오면 null을 넣는다. 기본형이라서 불가능
+        return "계산기 결과 : %d".formatted(a + b);
+    }
+
+    @GetMapping("/calc2")
+    @ResponseBody
+    String showCalc2(Integer a, Integer b) { // 매개변수에 아무값이 안들어오면 null을 넣는다. 참조형이라서 가능
+        return "a : " + a + ", b : " + b;
+    }
 }
