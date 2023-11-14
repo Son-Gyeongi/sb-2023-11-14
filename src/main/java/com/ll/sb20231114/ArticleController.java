@@ -11,6 +11,7 @@ import java.util.Map;
 
 @Controller
 public class ArticleController {
+    private Article lastArticle;
 
     // 액션 메서드 만들기
     @GetMapping("/article/write")
@@ -25,13 +26,19 @@ public class ArticleController {
             String body
     ) {
         // 객체 만들기
-        Article article = new Article(1,title, body);
+        lastArticle = new Article(1,title, body);
 
         Map<String, Object> rs = new HashMap<>();
         rs.put("msg", "1번 게시물이 작성되었습니다.");
-        rs.put("data", article);
+        rs.put("data", lastArticle);
 
         return rs;
+    }
+
+    @GetMapping("/article/getLastArticle")
+    @ResponseBody
+    Article getLastArticle() {
+        return lastArticle;
     }
 
     @AllArgsConstructor
