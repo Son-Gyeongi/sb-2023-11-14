@@ -15,6 +15,7 @@ public class HomeController {
     }
 
     @GetMapping("/about")
+    @ResponseBody
     String showAbout() {
         return "개발자 커뮤니티";
     }
