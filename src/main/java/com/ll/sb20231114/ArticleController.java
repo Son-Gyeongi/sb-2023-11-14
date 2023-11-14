@@ -63,23 +63,13 @@ public class ArticleController {
     }
 }
 
-/*
-// 결과
-        Map<String, Object> rs = new LinkedHashMap<>();
-        rs.put("resultCode", "S-1"); // S : Success 성공
-        rs.put("msg", "%d번 게시물이 작성되었습니다.".formatted(article.getId()));
-        rs.put("data", article);
-    아래와 같이 클래스로 따로 만든다.
- */
 // 보고서 양식 - 다른데서도 쓴다.
 @AllArgsConstructor
 @Getter
 class RsData { // ResultData라는 뜻
     private String resultCode;
     private String msg;
-    // 범용적으로 쓰기 위해서 Object 사용
-    private Article data; // 제너릭 들어오기 전 Object를 많이 썼다.
-    // 모든 클래스는 Object의 자손이어서 다 올 수 있다.
+    private Article data;
 }
 
 @AllArgsConstructor
