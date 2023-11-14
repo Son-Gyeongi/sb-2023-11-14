@@ -24,19 +24,22 @@ public class HomeController {
 
     @GetMapping("/calc") // /calc?a=10&b=20
     @ResponseBody
-    String showCalc(int a, int b) { // 매개변수에 아무값이 안들어오면 null을 넣는다. 기본형이라서 불가능
+    String showCalc(int a, int b) {
+        // 매개변수에 아무값이 안들어오면 null을 넣는다. int가 기본형이라서 불가능
         return "계산 결과 : %d".formatted(a + b);
     }
 
     @GetMapping("/calc2")
     @ResponseBody
-    String showCalc2(Integer a, Integer b) { // 매개변수에 아무값이 안들어오면 null을 넣는다. 참조형이라서 가능
+    String showCalc2(Integer a, Integer b) {
+        // 매개변수에 아무값이 안들어오면 null을 넣는다. Integer가 참조형이라서 가능
         return "a : " + a + ", b : " + b;
     }
 
     @GetMapping("/calc3") // /calc?a=10&b=20, url은 무조건 다 문자열이다.
     @ResponseBody
     String showCalc3( // 값이 안 들어오면 0이 기본값으로 들어온다.
+                      // int는 정수 허용
             @RequestParam(defaultValue = "0") int a,
             @RequestParam(defaultValue = "0") int b
     ) {
@@ -46,15 +49,17 @@ public class HomeController {
     @GetMapping("/calc4") // /calc?a=10.5&b=20, url은 무조건 다 문자열이다.
     @ResponseBody
     String showCalc4( // 값이 안 들어오면 0이 기본값으로 들어온다.
+                      // double은 정수, 실수 허용
                       @RequestParam(defaultValue = "0") double a,
                       @RequestParam(defaultValue = "0") double b
     ) {
-        return "계산 결과 : %f".formatted(a + b); // %f 10진수 정수
+        return "계산 결과 : %f".formatted(a + b); // %f 실수
     }
 
     @GetMapping("/calc5") // /calc?a=안녕&b=하세요, url은 무조건 다 문자열이다.
     @ResponseBody
-    String showCalc5( // 값이 안 들어오면 0이 기본값으로 들어온다.
+    String showCalc5( // 값이 안 들어오면 "-"이 기본값으로 들어온다.
+                      // String은 문자열, 정수, 실수 다 허용
                       @RequestParam(defaultValue = "-") String a,
                       @RequestParam(defaultValue = "-") String b
     ) {
