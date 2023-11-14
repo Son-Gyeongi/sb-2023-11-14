@@ -243,6 +243,17 @@ public class HomeController {
         return "calc21";
     }
 
+    int num = 0; // 인스턴스 변수, HomeController가 죽기 전까지 기억된다.
+    @GetMapping("/calc22")
+    @ResponseBody
+    int showCalc22() {
+//        int num = 0; // 지역변수
+
+        num++;
+
+        return num;
+    }
+
     @AllArgsConstructor
     class Person {
         public String name;
