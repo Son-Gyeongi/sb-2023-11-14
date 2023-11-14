@@ -32,18 +32,16 @@ public class ArticleController {
         articles.add(article);
 
         // 결과
-        RsData rs = new RsData(
+        // Article 버전의 RsData 객체
+        RsData<Article> rs = new RsData<>(
                 "S-1",
                 "%d번 게시물이 작성되었습니다.".formatted(article.getId()),
                 article
         );
 
-        // Object의 한계
-        // 항상 추상적인 거에서 구체적인 거로 갈때 수동 형변환 해줘야 한다.
-        // 넣을 때는 좋은데 뺄 때는 형변환 해야한다.
         String resultCode = rs.getResultCode();
         String msg = rs.getMsg();
-        Article _article = rs.getData();
+        Article _article = rs.getData(); // 형변환 안해도 된다.
 
         return rs;
     }
@@ -64,12 +62,13 @@ public class ArticleController {
 }
 
 // 보고서 양식 - 다른데서도 쓴다.
+// 어떤 클래스 미완성인게 좋다.
 @AllArgsConstructor
 @Getter
-class RsData { // ResultData라는 뜻
+class RsData<T> { // ResultData라는 뜻
     private String resultCode;
     private String msg;
-    private Article data;
+    private T data;
 }
 
 @AllArgsConstructor
