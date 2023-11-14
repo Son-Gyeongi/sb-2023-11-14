@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@Controller // 개발자가 스프링부트에게 HomeController 클래스가 컨트롤러라는 걸 알려준다.
 public class HomeController {
 
     @GetMapping("/")
@@ -101,7 +101,6 @@ public class HomeController {
     @GetMapping("/calc9")
     @ResponseBody
     Person2 showCalc9(String name, int age) {
-        // 값이 없으면 기본형인 int로 인해서 오류 난다. String은 값이 없으면 null이 나온다.
         return new Person2(name, age); // 브라우저가 이해할 수 있게 번역된다.
     }
 
@@ -110,6 +109,7 @@ public class HomeController {
     Map<String, Object> showCalc10(
             String name, int age
     ) {
+        // 한번에 데이터가 2개 있는 Map을 생성
         Map<String, Object> psersonMap = Map.of(
                 // 큰 개념 Object / int, String을 다 품는다.
                 "name", name,
@@ -123,7 +123,9 @@ public class HomeController {
     @GetMapping("/calc11")
     @ResponseBody
     List<Integer> showCalc11() {
+        // 숫자 3개가 화면에 나온다.
         List<Integer> nums = new ArrayList<>() {{
+            // 익명 클래스 안에 생성자
             add(10);
             add(-510);
             add(10010);
@@ -147,7 +149,7 @@ public class HomeController {
     ) {
         List<Person2> persons = new ArrayList<>() {{
             // 익명클래스로 이름이 없는 생성자, 객체가 만들어지고나서 3개가 추가된다
-            // 3개로 채워진 리스트를 만들 수 있다.
+            // 객체 리모콘 3개로 채워진 리스트를 만들 수 있다.
             add(new Person2(name, age));
             add(new Person2(name + "!", age + 1));
             add(new Person2(name + "!!", age + 2));
@@ -162,6 +164,7 @@ public class HomeController {
     String showCalc14() {
         String html = "";
 
+        // \(역슬래시) 이스케이프 문자
         html += "<div>";
         html += "<input type=\"text\" placeholder=\"내용\">";
         html += "</div>";
@@ -169,6 +172,7 @@ public class HomeController {
         return html;
     }
 
+    // 긴 문자열은 String 보다는 StringBuilder 또는 TextBlock 를 이용하기, 문자열의 불변성 때문
     @GetMapping("/calc15")
     @ResponseBody
     String showCalc15() {
@@ -192,6 +196,8 @@ public class HomeController {
     @GetMapping("/calc17")
     @ResponseBody
     String showCalc17() {
+        // html 잘 보이게 하기 위해서, 소스 코드 예쁘게 보일 수 있다.
+        // 자바에서 """ (쌍따옴표 세 개)는 여러 줄의 문자열을 표현하는 기능
         String html = """
                 <div>
                     <input type = "text" placeholder="내용">
@@ -204,6 +210,7 @@ public class HomeController {
     @GetMapping("/calc18")
     @ResponseBody
     String showCalc18() {
+        // placeholder는 input 상자 안에 주석같은 역할, value는 값이 채워진 상태로 나온다.
         String html = """
                 <div>
                     <input type = "text" placeholder="내용" value="반가워요.">
@@ -216,6 +223,7 @@ public class HomeController {
     @GetMapping("/calc19")
     @ResponseBody
     String showCalc19(
+            // 값이 안 들어올 경우 null이 주어지는데, defaultValue를 사용함으로써 값이 없을 때 빈칸이 들어온다.
             @RequestParam(defaultValue = "") String subject,
             @RequestParam(defaultValue = "") String content
     ) {
@@ -233,15 +241,19 @@ public class HomeController {
 
     @GetMapping("/calc20")
     String showCalc20() {
+        // calc20.html 가기위해서 타임리프를 써야한다.
+        // "src/main/resources/templates/" + calc20 +".html"
         return "calc20";
     }
 
-    @GetMapping("/calc21")
+    @GetMapping("/calc21") // /calc21?v1=11&v2=22
     String showCalc21(Model model) {
         model.addAttribute("v1", "안녕");
         model.addAttribute("v2", "반가워");
         return "calc21";
     }
+    // 컨트롤러에서 뷰를 다루면 MVC 정책위반입니다.
+    // 타임리프를 통해서 뷰를 호출해주세요. 뷰 데이터는 Model 객체에 담아주세요.
 
     int num = 0; // 인스턴스 변수, HomeController가 죽기 전까지 기억된다.
     @GetMapping("/calc22")
@@ -256,12 +268,14 @@ public class HomeController {
 
     @AllArgsConstructor
     class Person {
+        // 클래스 필드에 접근하는 방법 : public으로 바꿔주기
         public String name;
         public int age;
     }
 
     @AllArgsConstructor
     class Person2 {
+        // 클래스 필드에 접근하는 방법 : 필드가 private일 경우 @Getter를 사용
         @Getter
         private String name;
         @Getter
