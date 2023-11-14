@@ -11,7 +11,9 @@ import java.util.Map;
 
 @Controller
 public class ArticleController {
-    private Article lastArticle; // 장기 기억하기 위해서 밖으로 뺐다.
+    // 장기 기억하기 위해서 밖으로 뺐다.
+    private Article[] articles = new Article[3]; // 여러개 저장하기 위해서
+    private int articlesLastIndex = -1;
 
     // 액션 메서드 만들기
     // 게시글 작성
@@ -27,12 +29,14 @@ public class ArticleController {
             String body
     ) {
         // 객체 만들기
-        lastArticle = new Article(1,title, body);
+        Article article = new Article(articlesLastIndex + 2, title, body);
 
         // 결과
         Map<String, Object> rs = new HashMap<>();
-        rs.put("msg", "1번 게시물이 작성되었습니다.");
-        rs.put("data", lastArticle);
+        rs.put("msg", "%d번 게시물이 작성되었습니다.".formatted(article.getId()));
+        rs.put("data", article);
+
+        articles[++articlesLastIndex] = article;
 
         return rs;
     }
@@ -41,7 +45,13 @@ public class ArticleController {
     @GetMapping("/article/getLastArticle")
     @ResponseBody
     Article getLastArticle() {
-        return lastArticle;
+        return articles[articlesLastIndex];
+    }
+
+    @GetMapping("/article/getArticles")
+    @ResponseBody
+    Article[] getArticles() {
+        return articles;
     }
 
     @AllArgsConstructor

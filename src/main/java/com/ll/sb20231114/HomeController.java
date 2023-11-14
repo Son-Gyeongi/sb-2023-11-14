@@ -246,7 +246,8 @@ public class HomeController {
         return "calc20";
     }
 
-    @GetMapping("/calc21") // /calc21?v1=11&v2=22
+    @GetMapping("/calc21")
+        // /calc21?v1=11&v2=22
     String showCalc21(Model model) {
         model.addAttribute("v1", "안녕");
         model.addAttribute("v2", "반가워");
@@ -258,6 +259,7 @@ public class HomeController {
     // 매번 같은 HomeController가 나의 요청을 처리해준다.
     // 컨트롤러 객체(bean)은 딱 1개만 생성되어 사용된다. / 싱글톤
     int num = 0; // 인스턴스 변수, HomeController가 죽기 전까지 기억된다.
+
     @GetMapping("/calc22")
     @ResponseBody
     int showCalc22() {
