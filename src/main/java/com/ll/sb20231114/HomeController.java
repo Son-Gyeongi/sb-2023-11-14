@@ -3,6 +3,7 @@ package com.ll.sb20231114;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -46,8 +47,8 @@ public class HomeController {
     @ResponseBody
     String showCalc3( // 값이 안 들어오면 0이 기본값으로 들어온다.
                       // int는 정수 허용
-            @RequestParam(defaultValue = "0") int a,
-            @RequestParam(defaultValue = "0") int b
+                      @RequestParam(defaultValue = "0") int a,
+                      @RequestParam(defaultValue = "0") int b
     ) {
         return "계산 결과 : %d".formatted(a + b); // %d 10진수 정수
     }
@@ -76,7 +77,7 @@ public class HomeController {
     @ResponseBody
     int showCalc6(
             // int는 자바에서만 이해할 수 있는 개념, 브라우저에서 이해할 수 없다. 만국공통어는 String 문자열이다.
-                     int a, int b
+            int a, int b
     ) {
         return a + b;
     }
@@ -145,14 +146,103 @@ public class HomeController {
             String name, int age
     ) {
         List<Person2> persons = new ArrayList<>() {{
+            // 익명클래스로 이름이 없는 생성자, 객체가 만들어지고나서 3개가 추가된다
             // 3개로 채워진 리스트를 만들 수 있다.
             add(new Person2(name, age));
-            add(new Person2(name+"!", age+1));
+            add(new Person2(name + "!", age + 1));
             add(new Person2(name + "!!", age + 2));
         }};
 
         // 객체랑 Map이랑 비슷하게 전송된다. json은 객체랑 Map을 구분할 방법이 없다.
         return persons;
+    }
+
+    @GetMapping("/calc14")
+    @ResponseBody
+    String showCalc14() {
+        String html = "";
+
+        html += "<div>";
+        html += "<intpu type=\"text\" placeholder=\"내용\">";
+        html += "</div>";
+
+        return html;
+    }
+
+    @GetMapping("/calc15")
+    @ResponseBody
+    String showCalc15() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("<div>");
+        sb.append("<intpu type=\"text\" placeholder=\"내용\">");
+        sb.append("</div>");
+
+        return sb.toString();
+    }
+
+    @GetMapping("/calc16")
+    @ResponseBody
+    String showCalc16() {
+        String html = "<div><intpu type=\"text\" placeholder=\"내용\"></div>";
+
+        return html;
+    }
+
+    @GetMapping("/calc17")
+    @ResponseBody
+    String showCalc17() {
+        String html = """
+                <div>
+                    <intpu type = "text" placeholder="내용">
+                </div>
+                """;
+
+        return html;
+    }
+
+    @GetMapping("/calc18")
+    @ResponseBody
+    String showCalc18() {
+        String html = """
+                <div>
+                    <intpu type = "text" placeholder="내용" value="반가워요.">
+                </div>
+                """;
+
+        return html;
+    }
+
+    @GetMapping("/calc19")
+    @ResponseBody
+    String showCalc19(
+            @RequestParam(defaultValue = "") String subject,
+            @RequestParam(defaultValue = "") String content
+    ) {
+        String html = """
+                <div>
+                    <intpu type = "text" placeholder="제목" value="%s">
+                </div>
+                <div>
+                    <intpu type = "text" placeholder="내용" value="%s">
+                </div>
+                """.formatted(subject, content);
+
+        return html;
+    }
+
+    @GetMapping("/calc20")
+    @ResponseBody
+    String showCalc20() {
+        return "calc20";
+    }
+
+    @GetMapping("/calc21")
+    @ResponseBody
+    String showCalc21(Model model) {
+        model.addAttribute("v1", "안녕");
+        model.addAttribute("v2", "반가워");
+        return "calc21";
     }
 
     @AllArgsConstructor
