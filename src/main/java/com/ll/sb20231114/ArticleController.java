@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Controller
 public class ArticleController {
-    private Article lastArticle;
+    private Article lastArticle; // 장기 기억하기 위해서 밖으로 뺐다.
 
     // 액션 메서드 만들기
     @GetMapping("/article/write")
