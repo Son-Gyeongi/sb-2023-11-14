@@ -43,7 +43,7 @@ public class ArticleController {
         // 넣을 때는 좋은데 뺄 때는 형변환 해야한다.
         String resultCode = rs.getResultCode();
         String msg = rs.getMsg();
-        Article _article = (Article) rs.getData();
+        Article _article = rs.getData();
 
         return rs;
     }
@@ -78,7 +78,7 @@ class RsData { // ResultData라는 뜻
     private String resultCode;
     private String msg;
     // 범용적으로 쓰기 위해서 Object 사용
-    private Object data; // 제너릭 들어오기 전 Object를 많이 썼다.
+    private Article data; // 제너릭 들어오기 전 Object를 많이 썼다.
     // 모든 클래스는 Object의 자손이어서 다 올 수 있다.
 }
 
