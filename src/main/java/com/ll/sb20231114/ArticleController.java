@@ -6,10 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class ArticleController {
@@ -34,7 +31,9 @@ public class ArticleController {
         Article article = new Article(articles.size() + 1, title, body);
 
         // 결과
-        Map<String, Object> rs = new HashMap<>();
+        // LinkedHashMap : 데이터 순서 기억, HashMap : 데이터 순서 기억 안함
+        Map<String, Object> rs = new LinkedHashMap<>();
+        rs.put("resultCode", "S-1"); // S : Success 성공
         rs.put("msg", "%d번 게시물이 작성되었습니다.".formatted(article.getId()));
         rs.put("data", article);
 
