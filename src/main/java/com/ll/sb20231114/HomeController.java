@@ -1,9 +1,15 @@
 package com.ll.sb20231114;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class HomeController {
@@ -64,5 +70,102 @@ public class HomeController {
                       @RequestParam(defaultValue = "-") String b
     ) {
         return "계산 결과 : %s".formatted(a + b); // %s 문자열
+    }
+
+    @GetMapping("/calc6") // /calc?a=10&b=20, url은 무조건 다 문자열이다.
+    @ResponseBody
+    int showCalc6(
+            // int는 자바에서만 이해할 수 있는 개념, 브라우저에서 이해할 수 없다. 만국공통어는 String 문자열이다.
+                     int a, int b
+    ) {
+        return a + b;
+    }
+
+    @GetMapping("/calc7") // /calc?a=10&b=20, url은 무조건 다 문자열이다.
+    @ResponseBody
+    boolean showCalc7(
+            // boolean은 자바에서만 이해할 수 있는 개념, 브라우저에서 이해할 수 없다. 만국공통어는 String 문자열이다.
+            int a, int b
+    ) {
+        return a > b;
+    }
+
+    @GetMapping("/calc8")
+    @ResponseBody
+    Person showCalc8(String name, int age) {
+        // 값이 없으면 기본형인 int로 인해서 오류 난다. String은 값이 없으면 null이 나온다.
+        return new Person(name, age); // 브라우저가 이해할 수 있게 번역된다.
+    }
+
+    @GetMapping("/calc9")
+    @ResponseBody
+    Person2 showCalc9(String name, int age) {
+        // 값이 없으면 기본형인 int로 인해서 오류 난다. String은 값이 없으면 null이 나온다.
+        return new Person2(name, age); // 브라우저가 이해할 수 있게 번역된다.
+    }
+
+    @GetMapping("/calc10")
+    @ResponseBody
+    Map<String, Object> showCalc10(
+            String name, int age
+    ) {
+        Map<String, Object> psersonMap = Map.of(
+                // 큰 개념 Object / int, String을 다 품는다.
+                "name", name,
+                "age", age
+        );
+
+        // 객체랑 Map이랑 비슷하게 전송된다. json은 객체랑 Map을 구분할 방법이 없다.
+        return psersonMap;
+    }
+
+    @GetMapping("/calc11")
+    @ResponseBody
+    List<Integer> showCalc11() {
+        List<Integer> nums = new ArrayList<>() {{
+            add(10);
+            add(-510);
+            add(10010);
+        }};
+
+        return nums;
+    }
+
+    @GetMapping("/calc12")
+    @ResponseBody
+    int[] showCalc12() {
+        int[] nums = new int[]{10, -510, 10010};
+
+        return nums; // List<Integer>와 int[] 배열을 브라우저에 번역해서 보냈을 때 구분을 할 수 없다.
+    }
+
+    @GetMapping("/calc13")
+    @ResponseBody
+    List<Person2> showCalc13(
+            String name, int age
+    ) {
+        List<Person2> persons = new ArrayList<>() {{
+            // 3개로 채워진 리스트를 만들 수 있다.
+            add(new Person2(name, age));
+            add(new Person2(name+"!", age+1));
+            add(new Person2(name + "!!", age + 2));
+        }};
+
+        // 객체랑 Map이랑 비슷하게 전송된다. json은 객체랑 Map을 구분할 방법이 없다.
+        return persons;
+    }
+
+    @AllArgsConstructor
+    class Person {
+        public String name;
+        public int age;
+    }
+
+    @AllArgsConstructor
+    class Person2 {
+        @Getter
+        private String name;
+        @Getter
+        private int age;
     }
 }
