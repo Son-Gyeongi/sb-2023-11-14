@@ -163,7 +163,7 @@ public class HomeController {
         String html = "";
 
         html += "<div>";
-        html += "<intpu type=\"text\" placeholder=\"내용\">";
+        html += "<input type=\"text\" placeholder=\"내용\">";
         html += "</div>";
 
         return html;
@@ -175,7 +175,7 @@ public class HomeController {
         StringBuilder sb = new StringBuilder();
 
         sb.append("<div>");
-        sb.append("<intpu type=\"text\" placeholder=\"내용\">");
+        sb.append("<input type=\"text\" placeholder=\"내용\">");
         sb.append("</div>");
 
         return sb.toString();
@@ -184,7 +184,7 @@ public class HomeController {
     @GetMapping("/calc16")
     @ResponseBody
     String showCalc16() {
-        String html = "<div><intpu type=\"text\" placeholder=\"내용\"></div>";
+        String html = "<div><input type=\"text\" placeholder=\"내용\"></div>";
 
         return html;
     }
@@ -194,7 +194,7 @@ public class HomeController {
     String showCalc17() {
         String html = """
                 <div>
-                    <intpu type = "text" placeholder="내용">
+                    <input type = "text" placeholder="내용">
                 </div>
                 """;
 
@@ -206,7 +206,7 @@ public class HomeController {
     String showCalc18() {
         String html = """
                 <div>
-                    <intpu type = "text" placeholder="내용" value="반가워요.">
+                    <input type = "text" placeholder="내용" value="반가워요.">
                 </div>
                 """;
 
@@ -221,10 +221,10 @@ public class HomeController {
     ) {
         String html = """
                 <div>
-                    <intpu type = "text" placeholder="제목" value="%s">
+                    <input type = "text" placeholder="제목" value="%s">
                 </div>
                 <div>
-                    <intpu type = "text" placeholder="내용" value="%s">
+                    <input type = "text" placeholder="내용" value="%s">
                 </div>
                 """.formatted(subject, content);
 
@@ -232,13 +232,11 @@ public class HomeController {
     }
 
     @GetMapping("/calc20")
-    @ResponseBody
     String showCalc20() {
         return "calc20";
     }
 
     @GetMapping("/calc21")
-    @ResponseBody
     String showCalc21(Model model) {
         model.addAttribute("v1", "안녕");
         model.addAttribute("v2", "반가워");
