@@ -255,11 +255,13 @@ public class HomeController {
     // 컨트롤러에서 뷰를 다루면 MVC 정책위반입니다.
     // 타임리프를 통해서 뷰를 호출해주세요. 뷰 데이터는 Model 객체에 담아주세요.
 
+    // 매번 같은 HomeController가 나의 요청을 처리해준다.
+    // 컨트롤러 객체(bean)은 딱 1개만 생성되어 사용된다. / 싱글톤
     int num = 0; // 인스턴스 변수, HomeController가 죽기 전까지 기억된다.
     @GetMapping("/calc22")
     @ResponseBody
     int showCalc22() {
-//        int num = 0; // 지역변수
+//        int num = 0; // 지역변수, showCalc22() 함수가 실행이 되고 함수가 끝나면 사라진다.
 
         num++;
 
