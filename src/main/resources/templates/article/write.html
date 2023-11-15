@@ -7,6 +7,8 @@
     <button type="submit">
         글쓰기
     </button>
+<!--    가장 가까이 있는 action의 url을 바꾼다.-->
+    <input onclick="this.closest('form').setAttribute('action', '/article/write2')" type="submit" value="글쓰기">
 </form>
 
 <script>
