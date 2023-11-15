@@ -1,19 +1,18 @@
 package com.ll.sb20231114.domain.article.article.controller;
 
 import com.ll.sb20231114.domain.article.article.entity.Article;
+import com.ll.sb20231114.domain.article.article.service.ArticleService;
 import com.ll.sb20231114.global.rsData.RsData;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class ArticleController {
-    // 장기 기억하기 위해서 밖으로 뺐다.
-    private List<Article> articles = new ArrayList<>(); // 여러개 저장하기 위해서
+    private final ArticleService articleService = new ArticleService();
 
     // 액션 메서드 만들기
     // 게시글 작성
@@ -29,9 +28,7 @@ public class ArticleController {
             String title,
             String body
     ) {
-        // 객체 만들기
-        Article article = new Article(articles.size() + 1, title, body);
-        articles.add(article);
+        Article article = articleService.write(title, body);
 
         // 결과
         // Article 버전의 RsData 객체
@@ -41,10 +38,6 @@ public class ArticleController {
                 article
         );
 
-        String resultCode = rs.getResultCode();
-        String msg = rs.getMsg();
-        Article _article = rs.getData(); // 형변환 안해도 된다.
-
         return rs;
     }
 
@@ -52,14 +45,14 @@ public class ArticleController {
     @GetMapping("/article/getLastArticle")
     @ResponseBody
     Article getLastArticle() {
-        return articles.getLast();
+        return articleService.findLastArticle();
     }
 
     // 모든 게시글 불러온다.
     @GetMapping("/article/getArticles")
     @ResponseBody
     List<Article> getArticles() {
-        return articles;
+        return articleService.findAll();
     }
 }
 
