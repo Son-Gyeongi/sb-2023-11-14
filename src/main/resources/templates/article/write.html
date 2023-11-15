@@ -11,9 +11,9 @@
 
 <script>
     function submitWriteForm() {
-        const title = document.getElementById('input-title').value;
+        const title = document.getElementById('input-title').value.trim();
 
-        const body = document.getElementById('input-body').value;
+        const body = document.getElementById('input-body').value.trim();
 
         if (title.length == 0) {
             alert('제목을 입력해주세요.');
