@@ -1,10 +1,7 @@
-<!-- return false; 눌러도 안들어가짐-->
-<a onclick="return false;" href="https://www.naver.com">네이버</a>
+<form onsubmit="submitWriteForm(this); return false;" style="display: flex; flex-direction: column; gap: 20px; max-width: 500px">
+    <input type="text" name="title" placeholder="제목">
 
-<form onsubmit="submitWriteForm(); return false;" style="display: flex; flex-direction: column; gap: 20px; max-width: 500px">
-    <input type="text" id="input-title" placeholder="제목">
-
-    <input type="text" id="input-body" placeholder="내용">
+    <input type="text" name="body" placeholder="내용">
 
     <button type="submit">
         글쓰기
@@ -12,9 +9,9 @@
 </form>
 
 <script>
-    function submitWriteForm() {
-        const inputTitle = document.getElementById('input-title');
-        const inputBody = document.getElementById('input-body');
+    function submitWriteForm(form) {
+        const inputTitle = form.title;
+        const inputBody = form.body;
 
         // 입력할 때 공백 제거
         inputTitle.value = inputTitle.value.trim();
