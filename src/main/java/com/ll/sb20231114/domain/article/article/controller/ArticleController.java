@@ -50,7 +50,8 @@ public class ArticleController {
 
     // 스프링부트 없던 시절 HttpServletRequest로 요청 받음, HttpServletResponse 응답 전달
     @PostMapping("/article/write2")
-    @SneakyThrows // try-catch 자동 생성
+    @SneakyThrows
+    // try-catch 자동 생성
     void write2(
             HttpServletRequest req,
             HttpServletResponse resp
@@ -88,6 +89,27 @@ public class ArticleController {
     @ResponseBody
     List<Article> getArticles() {
         return articleService.findAll();
+    }
+
+    // 범위(scope) 알아보기
+    // ArticleService 는 싱글톤으로 딱 1번만 객체 생성되고 그 이후에는 무조건 해당 객체가 공유되는 방식이다, 절대 없어지지 않는다.
+    @GetMapping("/article/articleServicePointer")
+    @ResponseBody
+    String articleServicePointer() {
+        return articleService.toString();
+    }
+
+    // HttpServletRequest, HttpServletResponse 객체는 금방 사라진다.
+    @GetMapping("/article/httpServletRequestPointer")
+    @ResponseBody
+    String httpServletRequestPointer(HttpServletRequest req) {
+        return req.toString();
+    }
+
+    @GetMapping("/article/httpServletResponsePointer")
+    @ResponseBody
+    String httpServletResponsePointer(HttpServletResponse resp) {
+        return resp.toString();
     }
 }
 
