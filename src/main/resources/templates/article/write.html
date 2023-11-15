@@ -14,6 +14,19 @@
         const title = document.getElementById('input-title').value;
 
         const body = document.getElementById('input-body').value;
+
+        if (title.length == 0) {
+            alert('제목을 입력해주세요.');
+
+            return;
+        }
+
+        if (body.length == 0) {
+            alert('내용을 입력해주세요.');
+
+            return;
+        }
+
         location.href = `/article/doWrite?title=${title}&body=${body}`;
     }
 </script>
