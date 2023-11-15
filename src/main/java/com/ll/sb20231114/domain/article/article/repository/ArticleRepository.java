@@ -13,8 +13,8 @@ public class ArticleRepository {
     // 장기 기억하기 위해서 밖으로 뺐다.
 //    private List<Article> articles = new ArrayList<>(); // 여러개 저장하기 위해서
 
-    // 원래 만들어진 ArrayList에도 생성자 주입 해보기
-    private final ArticleArrayList articles;
+    // AppConfig 만들어서 빈 관리하기
+    private final List<Article> articles;
 
     public Article save(Article article) {
         // id값 추가하기
