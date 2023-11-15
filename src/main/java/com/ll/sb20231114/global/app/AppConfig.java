@@ -11,7 +11,8 @@ import java.util.List;
 @Configuration // 설정 파일
 public class AppConfig {
 
-    @Bean // 빈 등록
+    @Bean
+        // 빈 등록
     List<Article> articles2() {
         return new LinkedList<>();
     }
