@@ -23,9 +23,9 @@ public class ArticleController {
     }
 
     // 글쓰기 버튼 누른 후에 저장
-    @PostMapping("/article/doWrite")
+    @PostMapping("/article/write")
     @ResponseBody
-    RsData doWrite(
+    RsData write(
             String title,
             String body
     ) {
