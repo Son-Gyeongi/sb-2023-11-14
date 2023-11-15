@@ -3,6 +3,7 @@ package com.ll.sb20231114.domain.article.article.controller;
 import com.ll.sb20231114.domain.article.article.entity.Article;
 import com.ll.sb20231114.domain.article.article.service.ArticleService;
 import com.ll.sb20231114.global.rsData.RsData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +13,8 @@ import java.util.List;
 
 @Controller
 public class ArticleController {
-    private final ArticleService articleService = new ArticleService();
+    @Autowired // 필드 주입, final은 뺸다. ArticleService에 @Component로 빈에 등록되어야지 쓸 수 있다.
+    private ArticleService articleService;
 
     // 액션 메서드 만들기
     // 게시글 작성

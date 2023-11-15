@@ -2,10 +2,11 @@ package com.ll.sb20231114.domain.article.article.service;
 
 import com.ll.sb20231114.domain.article.article.entity.Article;
 import com.ll.sb20231114.domain.article.article.repository.ArticleRepository;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
+@Component// 저는 단 한번만 생성되고, 그 이후에는 재사용되는 객체입니다.
 public class ArticleService {
 
     private final ArticleRepository articleRepository = new ArticleRepository();
