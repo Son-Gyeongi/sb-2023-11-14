@@ -3,7 +3,7 @@
     전송
 </a>
 
-<form action="/article/doWrite" onsubmit="submitWriteForm(this); return false;" style="display: flex; flex-direction: column; gap: 20px; max-width: 500px">
+<form method="POST" action="/article/doWrite" onsubmit="submitWriteForm(this); return false;" style="display: flex; flex-direction: column; gap: 20px; max-width: 500px">
     <input type="text" name="title" placeholder="제목">
 
     <input type="text" name="body" placeholder="내용">
