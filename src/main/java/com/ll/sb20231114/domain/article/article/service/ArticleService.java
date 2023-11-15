@@ -2,6 +2,7 @@ package com.ll.sb20231114.domain.article.article.service;
 
 import com.ll.sb20231114.domain.article.article.entity.Article;
 import com.ll.sb20231114.domain.article.article.repository.ArticleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -9,7 +10,8 @@ import java.util.List;
 @Component// 저는 단 한번만 생성되고, 그 이후에는 재사용되는 객체입니다.
 public class ArticleService {
 
-    private final ArticleRepository articleRepository = new ArticleRepository();
+    @Autowired // 필드 주입, final은 뺸다.
+    private ArticleRepository articleRepository;
 
     // 게시글 작성
     public Article write(String title, String body) {
