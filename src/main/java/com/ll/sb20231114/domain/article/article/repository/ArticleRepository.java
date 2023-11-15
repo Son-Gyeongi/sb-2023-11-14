@@ -1,12 +1,12 @@
 package com.ll.sb20231114.domain.article.article.repository;
 
 import com.ll.sb20231114.domain.article.article.entity.Article;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component // 빈에 등록
+@Repository // 빈에 등록
 public class ArticleRepository {
 
     // 장기 기억하기 위해서 밖으로 뺐다.
