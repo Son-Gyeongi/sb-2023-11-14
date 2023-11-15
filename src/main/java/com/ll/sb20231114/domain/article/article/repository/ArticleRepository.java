@@ -13,7 +13,7 @@ public class ArticleRepository {
     // 장기 기억하기 위해서 밖으로 뺐다.
 //    private List<Article> articles = new ArrayList<>(); // 여러개 저장하기 위해서
 
-    // AppConfig 만들어서 빈 관리하기
+    // AppConfig 만들어서 빈 관리하기, AppConfig에 있는 메서드명이랑 같은 것이 매칭된다.
     private final List<Article> articles;
 
     public Article save(Article article) {
