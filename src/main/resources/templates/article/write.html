@@ -11,6 +11,9 @@
 
 <script>
     function submitWriteForm() {
-        location.href = '/article/doWrite?title=제목&body=내용';
+        const title = '11';
+
+        const body = '22';
+        location.href = `/article/doWrite?title=${title}&body=${body}`;
     }
 </script>
