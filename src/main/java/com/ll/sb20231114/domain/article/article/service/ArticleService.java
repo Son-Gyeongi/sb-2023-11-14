@@ -2,18 +2,16 @@ package com.ll.sb20231114.domain.article.article.service;
 
 import com.ll.sb20231114.domain.article.article.entity.Article;
 import com.ll.sb20231114.domain.article.article.repository.ArticleRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service // 저는 단 한번만 생성되고, 그 이후에는 재사용되는 객체입니다.
+@RequiredArgsConstructor // 생성자 주입, final 붙은 필드만 생성
 public class ArticleService {
 
     private final ArticleRepository articleRepository;
-
-    public ArticleService(ArticleRepository articleRepository) {
-        this.articleRepository = articleRepository;
-    }
 
     // 게시글 작성
     public Article write(String title, String body) {
