@@ -43,23 +43,24 @@ public class ArticleController {
         articles.add(article);
 
         // 결과
-        RsData<Article> rs = new RsData<>(
+
+        return new RsData<>(
                 "S-1",
                 "%d번 게시글이 저장되었습니다.".formatted(article.getId()),
                 article
         );
-
-        return rs;
     }
 
     // 마지막 글 가져오기
     @GetMapping("/article/getLastArticle")
+    @ResponseBody
     Article getLastArticle() {
         return articles.getLast();
     }
 
     // 모든 글 가져오기
     @GetMapping("/article/getArticles")
+    @ResponseBody
     List<Article> getArticles() {
         return articles;
     }
