@@ -3,6 +3,7 @@ package com.ll.sb20231114.domain.article.article.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ll.sb20231114.domain.article.article.entity.Article;
 import com.ll.sb20231114.domain.article.article.service.ArticleService;
+import com.ll.sb20231114.global.rq.Rq;
 import com.ll.sb20231114.global.rsData.RsData;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,6 +21,7 @@ import java.util.List;
 public class ArticleController {
 
     private final ArticleService articleService;
+    private final Rq rq;
 
     // 액션 메서드 만들기
     // 게시글 작성
@@ -91,7 +93,7 @@ public class ArticleController {
         return articleService.findAll();
     }
 
-    // 범위(scope) 알아보기
+    // == 범위(scope) 알아보기
     // ArticleService 는 싱글톤으로 딱 1번만 객체 생성되고 그 이후에는 무조건 해당 객체가 공유되는 방식이다, 절대 없어지지 않는다.
     @GetMapping("/article/articleServicePointer")
     @ResponseBody
@@ -110,6 +112,13 @@ public class ArticleController {
     @ResponseBody
     String httpServletResponsePointer(HttpServletResponse resp) {
         return resp.toString();
+    }
+    // 범위(scope) 알아보기 ==
+
+    @GetMapping("/article/rqPointer")
+    @ResponseBody
+    String rqPointer() {
+        return rq.toString();
     }
 }
 
