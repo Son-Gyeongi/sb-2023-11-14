@@ -13,8 +13,13 @@ import java.util.List;
 
 @Controller
 public class ArticleController {
-    @Autowired // 필드 주입, final은 뺸다. ArticleService에 @Component로 빈에 등록되어야지 쓸 수 있다.
-    private ArticleService articleService;
+
+    private final ArticleService articleService;
+
+    @Autowired // 생성자 주입, 생성자가 한개이면 생략 가능
+    public ArticleController(ArticleService articleService) {
+        this.articleService = articleService;
+    }
 
     // 액션 메서드 만들기
     // 게시글 작성
