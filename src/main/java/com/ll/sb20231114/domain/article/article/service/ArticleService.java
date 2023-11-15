@@ -10,8 +10,12 @@ import java.util.List;
 @Service // 저는 단 한번만 생성되고, 그 이후에는 재사용되는 객체입니다.
 public class ArticleService {
 
-    @Autowired // 필드 주입, final은 뺸다.
-    private ArticleRepository articleRepository;
+    private final ArticleRepository articleRepository;
+
+    @Autowired // 생성자 주입, 생성자가 한개이면 생략 가능
+    public ArticleService(ArticleRepository articleRepository) {
+        this.articleRepository = articleRepository;
+    }
 
     // 게시글 작성
     public Article write(String title, String body) {
