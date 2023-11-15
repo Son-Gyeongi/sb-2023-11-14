@@ -11,6 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor // 생성자 주입, final 붙은 필드만 생성
 public class ArticleService {
 
+    // null이 들어가지 않게 진짜 객체(new)를 만들어 줘야 한다.
     private final ArticleRepository articleRepository;
 
     // 게시글 작성
