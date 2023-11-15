@@ -69,6 +69,10 @@ public class ArticleController {
         // 결과
         ObjectMapper objectMapper = new ObjectMapper();
 
+        // 직접 응답 정보를 넣어준다.
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+
         resp.getWriter().println(objectMapper.writeValueAsString(rs));
     }
 
