@@ -1,7 +1,7 @@
 <h1>리스트</h1>
 
 <ul th:if="${articles.size} > 0">
-    <li th:each="article : ${articles}" th:text="${article.title}"></li>
+    <li th:each="article : ${articles}" th:text="|${article.id}번 : ${article.title}|"></li>
 </ul>
 
 <hr>
