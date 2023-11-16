@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Controller
@@ -63,6 +65,9 @@ public class ArticleController {
 
         // 결과 한글이 들어가면 오류난다.
         String msg = "%d번 게시물 생성되었습니다.".formatted(article.getId());
+
+        // 한글 인코딩
+        msg = URLEncoder.encode(msg, StandardCharsets.UTF_8);
 
         return "redirect:/article/list?msg=" + msg;
     }
