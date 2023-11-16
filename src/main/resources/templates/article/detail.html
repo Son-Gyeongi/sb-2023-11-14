@@ -5,7 +5,16 @@
     <li><a href="/article/list">글 목록</a></li>
 </ul>
 
+<hr>
+
 <h2>번호 : <span th:text="${article.id}"></span></h2>
 <h2>제목 : <span th:text="${article.title}"></span></h2>
 <h2>내용</h2>
 <div th:text="${article.body}"></div>
+
+<hr>
+
+<ul style="display: flex; gap: 20px;">
+    <li><a th:href="|/article/modify/${article.id}|">글 수정</a></li>
+    <li><a th:href="|/article/delete/${article.id}|">글 삭제</a></li>
+</ul>
