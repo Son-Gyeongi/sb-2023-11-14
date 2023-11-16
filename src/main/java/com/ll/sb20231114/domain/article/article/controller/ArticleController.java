@@ -61,7 +61,12 @@ public class ArticleController {
 
     // 게시글 리스트
     @GetMapping("/article/list")
-    String showList() {
+    String showList(Model model) {
+        List<Article> articles = articleService.findAll();
+
+        // model에 담아서 list.html에 보내기
+        model.addAttribute("articles", articles);
+
         return "article/list";
     }
 
