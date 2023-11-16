@@ -110,7 +110,8 @@ public class ArticleController {
         articleService.delete(id);
 
         // 결과
-        String msg = "id %d, article deleted".formatted(id);
+        String msg = "%d번 게시물 삭제되었습니다.".formatted(id);
+        msg = URLEncoder.encode(msg, StandardCharsets.UTF_8);
 
         return "redirect:/article/list?msg=" + msg;
     }
