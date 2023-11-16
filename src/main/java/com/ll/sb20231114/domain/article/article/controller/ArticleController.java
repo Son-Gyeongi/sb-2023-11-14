@@ -30,7 +30,7 @@ public class ArticleController {
         // model에 담아서 list.html에 보내기
         model.addAttribute("articles", articles);
 
-        return "article/list";
+        return "article/article/list";
     }
 
     // 상세페이지
@@ -40,13 +40,13 @@ public class ArticleController {
 
         model.addAttribute("article", article); // model에 값을 담아서 detail.html로 준다.
 
-        return "article/detail";
+        return "article/article/detail";
     }
 
     // 게시글 작성
     @GetMapping("/article/write")
     String showWrite() {
-        return "article/write";
+        return "article/article/write";
     }
 
     @Data // @Getter, @Setter 쓸 수 있다.
@@ -73,7 +73,7 @@ public class ArticleController {
 
         model.addAttribute("article", article);
 
-        return "article/modify";
+        return "article/article/modify";
     }
 
     // 게시글 수정 데이터
