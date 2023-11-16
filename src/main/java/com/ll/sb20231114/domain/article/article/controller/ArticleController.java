@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Controller
@@ -90,14 +88,10 @@ public class ArticleController {
 
     // 게시글 수정
     @PostMapping("/article/modify/{id}")
-    String write(@PathVariable long id, @Valid ModifyForm modifyForm) {
+    String modify(@PathVariable long id, @Valid ModifyForm modifyForm) {
         articleService.modify(id, modifyForm.title, modifyForm.body);
 
-        // 결과
-        String msg = "%d번 게시물 수정되었습니다.".formatted(id);
-        msg = URLEncoder.encode(msg, StandardCharsets.UTF_8);
-
-        return "redirect:/article/list?msg=" + msg;
+        return rq.redirect("/article/list", "%d번 게시물 수정되었습니다.".formatted(id));
     }
 
     // 게시글 삭제
@@ -105,11 +99,7 @@ public class ArticleController {
     String delete(@PathVariable long id) {
         articleService.delete(id);
 
-        // 결과
-        String msg = "%d번 게시물 삭제되었습니다.".formatted(id);
-        msg = URLEncoder.encode(msg, StandardCharsets.UTF_8);
-
-        return "redirect:/article/list?msg=" + msg;
+        return rq.redirect("/article/list", "%d번 게시물 삭제되었습니다.".formatted(id));
     }
 }
 
