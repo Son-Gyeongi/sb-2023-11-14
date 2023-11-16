@@ -37,17 +37,12 @@ public class ArticleController {
             String body
     ) {
         if (title == null || title.trim().length() == 0) {
-            return new RsData(
-                    "F-1",
-                    "제목을 입력해주세요."
-            );
+            throw new IllegalArgumentException("제목을 입력해주세요.");
+            // 해당 요청을 처리하는 쓰레드가 정지
         }
 
         if (body == null || body.trim().length() == 0) {
-            return new RsData(
-                    "F-2",
-                    "내용을 입력해주세요."
-            );
+            throw new IllegalArgumentException("내용을 입력해주세요.");
         }
 
         Article article = articleService.write(title, body);
