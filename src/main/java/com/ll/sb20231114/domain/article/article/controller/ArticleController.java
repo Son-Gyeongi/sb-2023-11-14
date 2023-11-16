@@ -61,8 +61,8 @@ public class ArticleController {
     String write(@Valid WriteForm writeForm) {
         Article article = articleService.write(writeForm.title, writeForm.body);
 
-        // 결과
-        String msg = "id %d, article created".formatted(article.getId());
+        // 결과 한글이 들어가면 오류난다.
+        String msg = "%d번 게시물 생성되었습니다.".formatted(article.getId());
 
         return "redirect:/article/list?msg=" + msg;
     }
