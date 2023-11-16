@@ -25,7 +25,7 @@ public class ArticleController {
     private final ArticleService articleService;
     private final Rq rq;
 
-    // 게시글 수정
+    // 게시글 수정 이동
     @GetMapping("/article/modify/{id}")
     String showModify(Model model, @PathVariable long id) {
         Article article = articleService.findById(id).get();
@@ -33,6 +33,27 @@ public class ArticleController {
         model.addAttribute("article", article);
 
         return "article/modify";
+    }
+
+    // 게시글 수정 데이터
+    @Data // @Getter, @Setter 쓸 수 있다.
+    public static class ModifyForm {
+        @NotBlank
+        private String title;
+
+        @NotBlank
+        private String body;
+    }
+
+    // 게시글 수정
+    @PostMapping("/article/modify/{id}")
+    String write(@PathVariable long id, @Valid ModifyForm modifyForm) {
+        articleService.modify(id, modifyForm.title, modifyForm.body);
+
+        // 결과
+        String msg = "id %d, article modified".formatted(id);
+
+        return "redirect:/article/list?msg=" + msg;
     }
 
     // 게시글 삭제
@@ -69,7 +90,6 @@ public class ArticleController {
 
         @NotBlank
         private String body;
-
     }
 
     // 글쓰기 버튼 누른 후에 저장
