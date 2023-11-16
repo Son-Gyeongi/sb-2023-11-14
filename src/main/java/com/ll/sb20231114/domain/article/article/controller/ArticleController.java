@@ -6,9 +6,11 @@ import com.ll.sb20231114.global.rq.Rq;
 import com.ll.sb20231114.global.rsData.RsData;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,6 +19,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor // 생성자 주입, final 붙은 필드만 생성
+@Validated
 public class ArticleController {
 
     private final ArticleService articleService;
@@ -33,18 +36,9 @@ public class ArticleController {
     @PostMapping("/article/write")
     @ResponseBody
     RsData write(
-            String title,
-            String body
+            @NotBlank(message = "제목좀..") String title,
+            @NotBlank String body
     ) {
-        if (title == null || title.trim().length() == 0) {
-            throw new IllegalArgumentException("제목을 입력해주세요.");
-            // 해당 요청을 처리하는 쓰레드가 정지
-        }
-
-        if (body == null || body.trim().length() == 0) {
-            throw new IllegalArgumentException("내용을 입력해주세요.");
-        }
-
         Article article = articleService.write(title, body);
 
         // 결과
