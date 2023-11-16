@@ -59,6 +59,12 @@ public class ArticleController {
         return rs;
     }
 
+    // 게시글 리스트
+    @GetMapping("/article/list")
+    String showList() {
+        return "article/list";
+    }
+
     // 가장 마지막에 올라온 게시글 알려준다.
     @GetMapping("/article/getLastArticle")
     @ResponseBody
