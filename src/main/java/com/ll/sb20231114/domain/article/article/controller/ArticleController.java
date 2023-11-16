@@ -34,9 +34,10 @@ public class ArticleController {
 
     // 상세페이지
     @GetMapping("/article/detail/{id}")
-    @ResponseBody
-    String showDetail(@PathVariable long id) {
+    String showDetail(Model model, @PathVariable long id) {
         Article article = articleService.findById(id).get(); // Optional이면 0~1개 값이 온다. null이면 프로그램 뻗는다.
+
+        model.addAttribute("article", article); // model에 값을 담아서 detail.html로 준다.
 
         return "article/detail";
     }
