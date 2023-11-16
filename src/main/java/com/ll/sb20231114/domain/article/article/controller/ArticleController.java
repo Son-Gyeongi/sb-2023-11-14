@@ -25,7 +25,16 @@ public class ArticleController {
     private final ArticleService articleService;
     private final Rq rq;
 
-    // 액션 메서드 만들기
+    @GetMapping("/article/delete/{id}")
+    String delete(@PathVariable long id) {
+        articleService.delete(id);
+
+        // 결과
+        String msg = "id %d, article deleted".formatted(id);
+
+        return "redirect:/article/list?msg=" + msg;
+    }
+
     // 게시글 작성
     @GetMapping("/article/write")
     String showWrite() {

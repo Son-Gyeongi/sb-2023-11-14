@@ -47,4 +47,8 @@ public class ArticleRepository {
                 .filter(article -> article.getId() == id)
                 .findFirst(); // 처음에 일치하는 값을 반환
     }
+
+    public void delete(long id) {
+        articles.removeIf(article -> article.getId() == id);
+    }
 }
