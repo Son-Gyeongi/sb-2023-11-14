@@ -15,11 +15,11 @@
 <!-- tailwindcss는 body 안에 적는다. -->
 <script src="https://cdn.tailwindcss.com"></script>
 
-<div class="text-red-600" th:if="${param.msg} != null">
+<div class="text-[#FF0000]" th:if="${param.msg} != null">
     메세지 : [[${param.msg}]]
 </div>
 
-<ul class="flex gap-5">
+<ul class="flex gap-[21.45px]">
     <li><a href="/article/write">글 쓰기</a></li>
     <li><a href="/article/list">글 목록</a></li>
 </ul>
