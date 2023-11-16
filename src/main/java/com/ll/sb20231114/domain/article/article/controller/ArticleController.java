@@ -25,6 +25,17 @@ public class ArticleController {
     private final ArticleService articleService;
     private final Rq rq;
 
+    // 게시글 수정
+    @GetMapping("/article/modify/{id}")
+    String showModify(Model model, @PathVariable long id) {
+        Article article = articleService.findById(id).get();
+
+        model.addAttribute("article", article);
+
+        return "article/modify";
+    }
+
+    // 게시글 삭제
     @GetMapping("/article/delete/{id}")
     String delete(@PathVariable long id) {
         articleService.delete(id);
