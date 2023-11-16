@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository // 빈에 등록
 @RequiredArgsConstructor
@@ -38,5 +39,12 @@ public class ArticleRepository {
 
     public List<Article> findAll() {
         return articles;
+    }
+
+    // 상세페이지
+    public Optional<Article> findById(long id) {
+        return articles.stream()
+                .filter(article -> article.getId() == id)
+                .findFirst(); // 처음에 일치하는 값을 반환
     }
 }

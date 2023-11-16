@@ -12,10 +12,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor // 생성자 주입, final 붙은 필드만 생성
@@ -29,6 +31,17 @@ public class ArticleController {
     @GetMapping("/article/write")
     String showWrite() {
         return "article/write";
+    }
+
+    // 상세페이지
+    @GetMapping("/article/detail/{id}")
+    @ResponseBody
+    String showDetail(@PathVariable long id) {
+        Optional<Article> opArticle = articleService.findById(id);
+
+        Article article = opArticle.get(); // Optional이면 0~1개 값이 온다. null이면 프로그램 뻗는다.
+
+        return "article/detail";
     }
 
     @Data // @Getter, @Setter 쓸 수 있다.
