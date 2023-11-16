@@ -1,6 +1,5 @@
 package com.ll.sb20231114.domain.article.article.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ll.sb20231114.domain.article.article.entity.Article;
 import com.ll.sb20231114.domain.article.article.service.ArticleService;
 import com.ll.sb20231114.global.rq.Rq;
@@ -8,7 +7,6 @@ import com.ll.sb20231114.global.rsData.RsData;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,35 +47,6 @@ public class ArticleController {
         );
 
         return rs;
-    }
-
-    // 스프링부트 없던 시절 HttpServletRequest로 요청 받음, HttpServletResponse 응답 전달
-    @PostMapping("/article/write2")
-    @SneakyThrows
-    // try-catch 자동 생성
-    void write2(
-            HttpServletRequest req,
-            HttpServletResponse resp
-    ) {
-        String title = req.getParameter("title");
-        String body = req.getParameter("body");
-
-        Article article = articleService.write(title, body);
-
-        RsData<Article> rs = new RsData<>(
-                "S-1",
-                "%d번 게시물이 작성되었습니다.".formatted(article.getId()),
-                article
-        );
-
-        // 결과
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        // 직접 응답 정보를 넣어준다.
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
-
-        resp.getWriter().println(objectMapper.writeValueAsString(rs));
     }
 
     // 가장 마지막에 올라온 게시글 알려준다.
