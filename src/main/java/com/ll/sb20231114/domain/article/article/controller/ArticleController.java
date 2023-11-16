@@ -98,7 +98,8 @@ public class ArticleController {
         articleService.modify(id, modifyForm.title, modifyForm.body);
 
         // 결과
-        String msg = "id %d, article modified".formatted(id);
+        String msg = "%d번 게시물 수정되었습니다.".formatted(id);
+        msg = URLEncoder.encode(msg, StandardCharsets.UTF_8);
 
         return "redirect:/article/list?msg=" + msg;
     }
