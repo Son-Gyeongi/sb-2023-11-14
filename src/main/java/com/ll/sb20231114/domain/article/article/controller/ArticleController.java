@@ -6,11 +6,12 @@ import com.ll.sb20231114.global.rq.Rq;
 import com.ll.sb20231114.global.rsData.RsData;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,7 +20,6 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor // 생성자 주입, final 붙은 필드만 생성
-@Validated
 public class ArticleController {
 
     private final ArticleService articleService;
@@ -32,14 +32,21 @@ public class ArticleController {
         return "article/write";
     }
 
+    @Data // @Getter, @Setter 쓸 수 있다.
+    public static class WriteForm {
+        @NotBlank
+        private String title;
+
+        @NotBlank
+        private String body;
+
+    }
+
     // 글쓰기 버튼 누른 후에 저장
     @PostMapping("/article/write")
     @ResponseBody
-    RsData write(
-            @NotBlank(message = "제목좀..") String title,
-            @NotBlank String body
-    ) {
-        Article article = articleService.write(title, body);
+    RsData write(@Valid WriteForm writeForm) {
+        Article article = articleService.write(writeForm.title, writeForm.body);
 
         // 결과
         // Article 버전의 RsData 객체
