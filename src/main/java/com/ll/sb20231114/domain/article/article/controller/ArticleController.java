@@ -2,6 +2,7 @@ package com.ll.sb20231114.domain.article.article.controller;
 
 import com.ll.sb20231114.domain.article.article.entity.Article;
 import com.ll.sb20231114.domain.article.article.service.ArticleService;
+import com.ll.sb20231114.global.rq.Rq;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -21,6 +22,7 @@ import java.util.List;
 public class ArticleController {
 
     private final ArticleService articleService;
+    private final Rq rq;
 
     // 게시글 리스트
     @GetMapping("/article/list")
@@ -63,13 +65,7 @@ public class ArticleController {
     String write(@Valid WriteForm writeForm) {
         Article article = articleService.write(writeForm.title, writeForm.body);
 
-        // 결과 한글이 들어가면 오류난다.
-        String msg = "%d번 게시물 생성되었습니다.".formatted(article.getId());
-
-        // 한글 인코딩
-        msg = URLEncoder.encode(msg, StandardCharsets.UTF_8);
-
-        return "redirect:/article/list?msg=" + msg;
+        return rq.redirect("/article/list", "%d번 게시물 생성되었습니다.".formatted(article.getId()));
     }
 
     // 게시글 수정 이동
