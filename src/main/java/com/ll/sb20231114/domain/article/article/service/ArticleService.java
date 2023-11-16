@@ -25,11 +25,6 @@ public class ArticleService {
         return article;
     }
 
-    // 마지막 게시글 조회
-    public Article findLastArticle() {
-        return articleRepository.findLastArticle();
-    }
-
     // 모든 게시글 조회
     public List<Article> findAll() {
         return articleRepository.findAll();
