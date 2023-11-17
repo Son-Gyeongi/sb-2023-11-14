@@ -48,7 +48,7 @@ public class MemberController {
         // 로그인 처리
 
         // 응답에 쿠키 보내기
-        Cookie cookie = new Cookie("loginedMemberId", "2");
+        Cookie cookie = new Cookie("loginedMemberId", member.getId() + ""); // 응답은 String으로 보내야해서 "" 더해준다.
         cookie.setPath("/");
         response.addCookie(cookie);
 
