@@ -2,6 +2,8 @@ package com.ll.sb20231114.domain.article.article.controller;
 
 import com.ll.sb20231114.domain.article.article.entity.Article;
 import com.ll.sb20231114.domain.article.article.service.ArticleService;
+import com.ll.sb20231114.domain.member.member.entity.Member;
+import com.ll.sb20231114.domain.member.member.service.MemberService;
 import com.ll.sb20231114.global.rq.Rq;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -20,15 +22,19 @@ import java.util.List;
 public class ArticleController {
 
     private final ArticleService articleService;
+    private final MemberService memberService;
     private final Rq rq;
 
     // 게시글 리스트
     @GetMapping("/article/list")
     String showList(Model model) {
+        // 리스트에 로그인된 사용자도 정보를 보내자
+        Member loginedMember = memberService.findById(2L).get();
         List<Article> articles = articleService.findAll();
 
         // model에 담아서 list.html에 보내기
         model.addAttribute("articles", articles);
+        model.addAttribute("loginedMember", loginedMember);
 
         return "article/article/list";
     }
