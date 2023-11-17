@@ -3,6 +3,8 @@ package com.ll.sb20231114.domain.member.member.controller;
 import com.ll.sb20231114.domain.member.member.entity.Member;
 import com.ll.sb20231114.domain.member.member.service.MemberService;
 import com.ll.sb20231114.global.rq.Rq;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -33,7 +35,8 @@ public class MemberController {
 
     // 멤버 로그인 POST
     @PostMapping("/member/login")
-    String login(@Valid LoginForm loginForm) {
+    String login(@Valid LoginForm loginForm,
+                 HttpServletResponse response) {
         // 멤버 찾기
         Member member = memberService.findByUsername(loginForm.username).get();
 
@@ -43,6 +46,11 @@ public class MemberController {
         }
 
         // 로그인 처리
+
+        // 응답에 쿠키 보내기
+        Cookie cookie = new Cookie("loginedMemberId", "2");
+        cookie.setPath("/");
+        response.addCookie(cookie);
 
         return rq.redirect("/article/list", "로그인이 완료되었습니다.");
     }
