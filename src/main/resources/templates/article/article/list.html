@@ -2,7 +2,7 @@
 
 <div layout:fragment="content" class="p-2">
 
-    <div>
+    <div th:if="${loginedMember} != null">
         <span th:text="${loginedMember.username}"></span>님 환영합니다.
     </div>
 

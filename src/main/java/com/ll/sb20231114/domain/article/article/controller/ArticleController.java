@@ -5,6 +5,8 @@ import com.ll.sb20231114.domain.article.article.service.ArticleService;
 import com.ll.sb20231114.domain.member.member.entity.Member;
 import com.ll.sb20231114.domain.member.member.service.MemberService;
 import com.ll.sb20231114.global.rq.Rq;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -15,7 +17,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor // 생성자 주입, final 붙은 필드만 생성
@@ -27,14 +31,29 @@ public class ArticleController {
 
     // 게시글 리스트
     @GetMapping("/article/list")
-    String showList(Model model) {
-        // 리스트에 로그인된 사용자도 정보를 보내자
-        Member loginedMember = memberService.findById(2L).get();
+    String showList(Model model, HttpServletRequest req) {
+        // 쿠키이름이 loginedMemberId 이것인 것의 값을 가져와서 long 타입으로 변환,
+        // 만약에 그런게 없다면, 0을 반환
+        long loginedMemberId =
+                Optional.ofNullable(req.getCookies())
+                        .stream()
+                        .flatMap(Arrays::stream)
+                        .filter(cookie -> cookie.getName().equals("loginedMemberId"))
+                        .map(Cookie::getValue)
+                        .mapToLong(Long::parseLong)
+                        .findFirst()
+                        .orElse(0);
+
+        if (loginedMemberId > 0) {
+            // 리스트에 로그인된 사용자도 있으면 정보를 보내자
+            Member loginedMember = memberService.findById(loginedMemberId).get();
+            model.addAttribute("loginedMember", loginedMember);
+        }
+
         List<Article> articles = articleService.findAll();
 
         // model에 담아서 list.html에 보내기
         model.addAttribute("articles", articles);
-        model.addAttribute("loginedMember", loginedMember);
 
         return "article/article/list";
     }
