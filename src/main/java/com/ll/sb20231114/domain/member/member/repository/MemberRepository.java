@@ -46,4 +46,11 @@ public class MemberRepository {
     public void delete(long id) {
         members.removeIf(member -> member.getId() == id);
     }
+
+    // 멤버 username으로 찾기 (1명)
+    public Optional<Member> findByUsername(String username) {
+        return members.stream()
+                .filter(member -> member.getUsername().equals(username))
+                .findFirst();
+    }
 }

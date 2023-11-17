@@ -34,6 +34,11 @@ public class MemberService {
         return memberRepository.findById(id);
     }
 
+    // 멤버 username으로 찾기 (1명)
+    public Optional<Member> findByUsername(String username) {
+        return memberRepository.findByUsername(username);
+    }
+
     // 멤버 삭제
     public void delete(long id) {
         memberRepository.delete(id);

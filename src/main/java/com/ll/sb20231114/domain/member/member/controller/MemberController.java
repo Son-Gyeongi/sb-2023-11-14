@@ -23,6 +23,30 @@ public class MemberController {
         return "member/member/login"; // member/member/login.html
     }
 
+    @Data
+    public static class LoginForm {
+        @NotBlank
+        private String username;
+        @NotBlank
+        private String password;
+    }
+
+    // 멤버 로그인 POST
+    @PostMapping("/member/login")
+    String login(@Valid LoginForm loginForm) {
+        // 멤버 찾기
+        Member member = memberService.findByUsername(loginForm.username).get();
+
+        // 유효성 검사 - 비밀번호 일치 여부 확인
+        if (!member.getPassword().equals(loginForm.password)) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다");
+        }
+
+        // 로그인 처리
+
+        return rq.redirect("/article/list", "로그인이 완료되었습니다.");
+    }
+
     // 멤버 가입 GET
     @GetMapping("/member/join")
     String showJoin() {
@@ -30,7 +54,7 @@ public class MemberController {
     }
 
     @Data // @Getter, @Setter 등 다양한 어노테이션들이 모여있다.
-    public static class WriteForm {
+    public static class JoinForm {
         @NotBlank
         private String username;
         @NotBlank
@@ -39,7 +63,7 @@ public class MemberController {
 
     // 멤버 가입 POST
     @PostMapping("/member/join")
-    String join(@Valid WriteForm joinForm) {
+    String join(@Valid MemberController.JoinForm joinForm) {
         Member member = memberService.join(joinForm.username, joinForm.password);
 
         // 멤버 가입 GET 으로 이동
