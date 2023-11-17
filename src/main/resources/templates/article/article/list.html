@@ -3,7 +3,13 @@
 <div layout:fragment="content" class="p-2">
 
     <div th:if="${loginedMember} != null">
-        <span th:text="${loginedMember.username}"></span>님 환영합니다.
+        <span th:text="${loginedMember.username}"></span>님 환영합니다.(쿠키)
+    </div>
+
+    <hr>
+
+    <div th:if="${fromSessionLoginedMember} != null">
+        <span th:text="${fromSessionLoginedMember.username}"></span>님 환영합니다.(세션)
     </div>
 
     <h1 class="font-bold mb-2"><i class="fa-solid fa-list"></i> 글 목록</h1>
