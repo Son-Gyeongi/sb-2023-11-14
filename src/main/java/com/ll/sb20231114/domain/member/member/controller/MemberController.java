@@ -17,6 +17,12 @@ public class MemberController {
     private final MemberService memberService;
     private final Rq rq;
 
+    // 멤버 로그인 GET
+    @GetMapping("/member/login")
+    String showLogin() {
+        return "member/member/login"; // member/member/login.html
+    }
+
     // 멤버 가입 GET
     @GetMapping("/member/join")
     String showJoin() {
