@@ -52,6 +52,7 @@ public class ArticleController {
 
         long fromSessionLoginedMemberId = 0;
 
+        // 세션이 비어져있어도 세션에 뭔가를 뒤져보는 것만으로도 세션을 만든다.
         // session에 값이 있다면 long으로 형변환
         if (req.getSession().getAttribute("loginedMemberId") != null)
             fromSessionLoginedMemberId = (long) req.getSession().getAttribute("loginedMemberId");
