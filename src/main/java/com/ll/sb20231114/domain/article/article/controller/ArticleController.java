@@ -52,9 +52,11 @@ public class ArticleController {
 
         long fromSessionLoginedMemberId = 0;
 
+        // session에 값이 있다면 long으로 형변환
         if (req.getSession().getAttribute("loginedMemberId") != null)
             fromSessionLoginedMemberId = (long) req.getSession().getAttribute("loginedMemberId");
 
+        // 값이 있다면 model에 담아서 list.html로 넘긴다.
         if (fromSessionLoginedMemberId > 0) {
             Member loginedMember = memberService.findById(fromSessionLoginedMemberId).get();
             model.addAttribute("fromSessionLoginedMember", loginedMember);
