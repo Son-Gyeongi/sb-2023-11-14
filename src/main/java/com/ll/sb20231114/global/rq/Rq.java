@@ -19,6 +19,8 @@ public class Rq {
     private final HttpServletRequest req;
     private final HttpServletResponse resp;
     private final MemberService memberService;
+    private Member member;
+    // 멤버는 장기기억 했으면 좋겠다. final 안 쓰는 이유 member 생성된 후에 값을 넣어야 하므로
 
     public Rq(HttpServletRequest req, HttpServletResponse resp, MemberService memberService) {
         this.req = req;
@@ -51,6 +53,9 @@ public class Rq {
             return null;
         }
 
-        return memberService.findById(getMemberId()).get();
+        if (member == null)
+            member = memberService.findById(getMemberId()).get();
+
+        return member;
     }
 }
