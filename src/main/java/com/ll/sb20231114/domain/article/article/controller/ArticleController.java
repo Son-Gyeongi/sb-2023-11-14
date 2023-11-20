@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor // 생성자 주입, final 붙은 필드만 생성
@@ -29,19 +28,7 @@ public class ArticleController {
 
     // 게시글 리스트
     @GetMapping("/article/list")
-    String showList(Model model, HttpServletRequest req) {
-        // 세션에 "loginedMemberId" 값이 있으면 id를 반환하고 없으면 0을 반환
-        long loginedMemberId = Optional
-                .ofNullable(req.getSession().getAttribute("loginedMemberId"))
-                        .map(id -> (long) id)
-                        .orElse(0L);
-
-        // 값이 있다면 model에 담아서 list.html로 넘긴다.
-        if (loginedMemberId > 0) {
-            Member loginedMember = memberService.findById(loginedMemberId).get();
-            model.addAttribute("loginedMember", loginedMember);
-        }
-
+    String showList(Model model) {
         List<Article> articles = articleService.findAll();
 
         // model에 담아서 list.html에 보내기
@@ -53,16 +40,6 @@ public class ArticleController {
     // 상세페이지
     @GetMapping("/article/detail/{id}")
     String showDetail(Model model, @PathVariable long id, HttpServletRequest req) {
-        long loginedMemberId = Optional
-                .ofNullable(req.getSession().getAttribute("loginedMemberId"))
-                .map(_id -> (long) _id)
-                .orElse(0L);
-
-        if (loginedMemberId > 0) {
-            Member loginedMember = memberService.findById(loginedMemberId).get();
-            model.addAttribute("loginedMember", loginedMember);
-        }
-
         Article article = articleService.findById(id).get(); // Optional이면 0~1개 값이 온다. null이면 프로그램 뻗는다.
 
         model.addAttribute("article", article); // model에 값을 담아서 detail.html로 준다.
