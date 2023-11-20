@@ -78,8 +78,8 @@ public class ArticleController {
         long loginedMemberId = rq.getLoginedMemberId();
 
         if (loginedMemberId > 0) {
-            Member loginedMember = memberService.findById(loginedMemberId).get();
-            req.setAttribute("loginedMember", loginedMember);
+            Member loginedMember = rq.getLoginedMember();
+            req.setAttribute("loginedMember", loginedMember); // Model에 넣는 거랑 같다.
         }
 
         return "article/article/write";
