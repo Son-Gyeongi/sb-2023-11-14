@@ -2,6 +2,7 @@ package com.ll.sb20231114.domain.article.article.service;
 
 import com.ll.sb20231114.domain.article.article.entity.Article;
 import com.ll.sb20231114.domain.article.article.repository.ArticleRepository;
+import com.ll.sb20231114.domain.member.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +17,9 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
 
     // 게시글 작성
-    public Article write(String title, String body) {
+    public Article write(Member author, String title, String body) {
         // 객체 만들기
-        Article article = new Article(title, body);
+        Article article = new Article(author, title, body);
 
         articleRepository.save(article);
 

@@ -69,7 +69,7 @@ public class ArticleController {
     String write(@Valid WriteForm writeForm) {
         if (!rq.isLogined()) throw new RuntimeException("로그인 후 이용해주세요.");
 
-        Article article = articleService.write(writeForm.title, writeForm.body);
+        Article article = articleService.write(rq.getMember(), writeForm.title, writeForm.body);
 
         return rq.redirect("/article/list", "%d번 게시물 생성되었습니다.".formatted(article.getId()));
     }
