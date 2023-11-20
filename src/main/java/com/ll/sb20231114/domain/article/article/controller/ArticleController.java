@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,6 +49,8 @@ public class ArticleController {
     // 게시글 작성
     @GetMapping("/article/write")
     String showWrite() {
+        if (!rq.isLogined()) throw new RuntimeException("로그인 후 이용해주세요.");
+
         return "article/article/write";
     }
 
@@ -62,7 +65,10 @@ public class ArticleController {
 
     // 글쓰기 버튼 누른 후에 저장
     @PostMapping("/article/write")
+    @SneakyThrows
     String write(@Valid WriteForm writeForm) {
+        if (!rq.isLogined()) throw new RuntimeException("로그인 후 이용해주세요.");
+
         Article article = articleService.write(writeForm.title, writeForm.body);
 
         return rq.redirect("/article/list", "%d번 게시물 생성되었습니다.".formatted(article.getId()));
@@ -71,6 +77,8 @@ public class ArticleController {
     // 게시글 수정 이동
     @GetMapping("/article/modify/{id}")
     String showModify(Model model, @PathVariable long id) {
+        if (!rq.isLogined()) throw new RuntimeException("로그인 후 이용해주세요.");
+
         Article article = articleService.findById(id).get();
 
         model.addAttribute("article", article);
@@ -91,6 +99,8 @@ public class ArticleController {
     // 게시글 수정
     @PostMapping("/article/modify/{id}")
     String modify(@PathVariable long id, @Valid ModifyForm modifyForm) {
+        if (!rq.isLogined()) throw new RuntimeException("로그인 후 이용해주세요.");
+
         articleService.modify(id, modifyForm.title, modifyForm.body);
 
         return rq.redirect("/article/list", "%d번 게시물 수정되었습니다.".formatted(id));
@@ -99,6 +109,8 @@ public class ArticleController {
     // 게시글 삭제
     @GetMapping("/article/delete/{id}")
     String delete(@PathVariable long id) {
+        if (!rq.isLogined()) throw new RuntimeException("로그인 후 이용해주세요.");
+
         articleService.delete(id);
 
         return rq.redirect("/article/list", "%d번 게시물 삭제되었습니다.".formatted(id));
