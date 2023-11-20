@@ -3,7 +3,6 @@ package com.ll.sb20231114.domain.member.member.controller;
 import com.ll.sb20231114.domain.member.member.entity.Member;
 import com.ll.sb20231114.domain.member.member.service.MemberService;
 import com.ll.sb20231114.global.rq.Rq;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -49,11 +48,6 @@ public class MemberController {
         }
 
         // 로그인 처리
-
-        // 응답에 쿠키 보내기
-        Cookie cookie = new Cookie("loginedMemberId", member.getId() + ""); // 응답은 String으로 보내야해서 "" 더해준다.
-        cookie.setPath("/");
-        response.addCookie(cookie);
 
         HttpSession session = req.getSession();
         session.setAttribute("loginedMemberId", member.getId());

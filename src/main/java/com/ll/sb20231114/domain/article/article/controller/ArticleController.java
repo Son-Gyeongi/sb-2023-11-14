@@ -5,7 +5,6 @@ import com.ll.sb20231114.domain.article.article.service.ArticleService;
 import com.ll.sb20231114.domain.member.member.entity.Member;
 import com.ll.sb20231114.domain.member.member.service.MemberService;
 import com.ll.sb20231114.global.rq.Rq;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,30 +30,11 @@ public class ArticleController {
     // 게시글 리스트
     @GetMapping("/article/list")
     String showList(Model model, HttpServletRequest req) {
-        // 쿠키이름이 loginedMemberId 이것인 것의 값을 가져와서 long 타입으로 변환,
-        // 만약에 그런게 없다면, 0을 반환
-        long loginedMemberId =
-                Optional.ofNullable(req.getCookies())
-                        .stream()
-                        .flatMap(Arrays::stream)
-                        .filter(cookie -> cookie.getName().equals("loginedMemberId"))
-                        .map(Cookie::getValue)
-                        .mapToLong(Long::parseLong)
-                        .findFirst()
-                        .orElse(0);
-
-        if (loginedMemberId > 0) {
-            // 리스트에 로그인된 사용자도 있으면 정보를 보내자
-            Member loginedMember = memberService.findById(loginedMemberId).get();
-            model.addAttribute("loginedMember", loginedMember);
-        }
-
-        long fromSessionLoginedMemberId = 0;
-
-        // 세션이 비어져있어도 세션에 뭔가를 뒤져보는 것만으로도 세션을 만든다.
-        // session에 값이 있다면 long으로 형변환
-        if (req.getSession().getAttribute("loginedMemberId") != null)
-            fromSessionLoginedMemberId = (long) req.getSession().getAttribute("loginedMemberId");
+        // 세션에 "loginedMemberId" 값이 있으면 id를 반환하고 없으면 0을 반환
+        long fromSessionLoginedMemberId = Optional
+                .ofNullable(req.getSession().getAttribute("loginedMemberId"))
+                        .map(id -> (long) id)
+                        .orElse(0L);
 
         // 값이 있다면 model에 담아서 list.html로 넘긴다.
         if (fromSessionLoginedMemberId > 0) {

@@ -50,7 +50,10 @@
         <a href="/" class="btn btn-ghost text-xl">SIMPLE</a>
     </div>
     <div class="navbar-end">
-
+        <a th:if="${fromSessionLoginedMember} != null" href="/member/me" class="btn btn-ghost text-xl">
+<!--            세션 -->
+            <span th:text="|welcome ${fromSessionLoginedMember.username}|"></span>
+        </a>
     </div>
 </div>
 
