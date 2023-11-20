@@ -3,8 +3,6 @@ package com.ll.sb20231114.domain.member.member.controller;
 import com.ll.sb20231114.domain.member.member.entity.Member;
 import com.ll.sb20231114.domain.member.member.service.MemberService;
 import com.ll.sb20231114.global.rq.Rq;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -35,9 +33,7 @@ public class MemberController {
 
     // 멤버 로그인 POST
     @PostMapping("/member/login")
-    String login(@Valid LoginForm loginForm,
-                 HttpServletRequest req,
-                 HttpServletResponse response) {
+    String login(@Valid LoginForm loginForm) {
         // 멤버 찾기
         Member member = memberService.findByUsername(loginForm.username).get();
 
@@ -52,6 +48,14 @@ public class MemberController {
         rq.setSessionAttr("loginedMemberId", member.getId());
 
         return rq.redirect("/article/list", "로그인이 완료되었습니다.");
+    }
+
+    // 로그아웃 - 세션 삭제하면 된다.
+    @GetMapping("/member/logout")
+    String logout() {
+        rq.removeSessionAttr("loginedMemberId");
+
+        return rq.redirect("/article/list", "로그아웃이 되었습니다.");
     }
 
     // 멤버 가입 GET

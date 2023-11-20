@@ -59,8 +59,13 @@ public class Rq {
         return member;
     }
 
-    // 응답에 세션 추가
+    // 세션 추가 - 로그인
     public void setSessionAttr(String name, Long value) {
         req.getSession().setAttribute(name, value);
+    }
+
+    // 세션 삭제 - 로그아웃
+    public void removeSessionAttr(String name) {
+        req.getSession().removeAttribute(name);
     }
 }
