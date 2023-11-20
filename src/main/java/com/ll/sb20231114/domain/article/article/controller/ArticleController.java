@@ -72,7 +72,7 @@ public class ArticleController {
 
     // 게시글 작성
     @GetMapping("/article/write")
-    String showWrite(HttpServletRequest req, Model model) {
+    String showWrite(HttpServletRequest req) {
         long loginedMemberId = Optional
                 .ofNullable(req.getSession().getAttribute("loginedMemberId"))
                 .map(id -> (long) id)
@@ -80,7 +80,10 @@ public class ArticleController {
 
         if (loginedMemberId > 0) {
             Member loginedMember = memberService.findById(loginedMemberId).get();
-            model.addAttribute("loginedMember", loginedMember);
+            req.setAttribute("loginedMember", loginedMember);
+            // 위와 같은 코드 model.addAttribute("loginedMember", loginedMember);
+            // HttpServletRequest를 안 쓰려고 Model을 쓴거 였는데 지금은 HttpServletRequest가 있으므로
+            // 하나로 합치자
         }
 
         return "article/article/write";
