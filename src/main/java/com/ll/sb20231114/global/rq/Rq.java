@@ -8,6 +8,7 @@ import org.springframework.web.context.annotation.RequestScope;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 @RequestScope
 @Component
@@ -25,5 +26,13 @@ public class Rq {
         msg = URLEncoder.encode(msg, StandardCharsets.UTF_8);
 
         return "redirect:" + path + "?msg=" + msg;
+    }
+
+    // 로그인된 사용자 id 가져오기
+    public long getLoginedMemberId() {
+        return Optional
+                .ofNullable(req.getSession().getAttribute("loginedMemberId"))
+                .map(id -> (long) id)
+                .orElse(0L);
     }
 }
