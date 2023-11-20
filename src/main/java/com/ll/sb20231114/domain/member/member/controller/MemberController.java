@@ -5,7 +5,6 @@ import com.ll.sb20231114.domain.member.member.service.MemberService;
 import com.ll.sb20231114.global.rq.Rq;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -49,8 +48,8 @@ public class MemberController {
 
         // 로그인 처리
 
-        HttpSession session = req.getSession();
-        session.setAttribute("loginedMemberId", member.getId());
+        // 응답에 세션 추가
+        rq.setSessionAttr("loginedMemberId", member.getId());
 
         return rq.redirect("/article/list", "로그인이 완료되었습니다.");
     }
