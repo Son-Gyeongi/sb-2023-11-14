@@ -4,7 +4,6 @@ import com.ll.sb20231114.domain.article.article.entity.Article;
 import com.ll.sb20231114.domain.article.article.service.ArticleService;
 import com.ll.sb20231114.domain.member.member.service.MemberService;
 import com.ll.sb20231114.global.rq.Rq;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -38,7 +37,7 @@ public class ArticleController {
 
     // 상세페이지
     @GetMapping("/article/detail/{id}")
-    String showDetail(Model model, @PathVariable long id, HttpServletRequest req) {
+    String showDetail(Model model, @PathVariable long id) {
         Article article = articleService.findById(id).get(); // Optional이면 0~1개 값이 온다. null이면 프로그램 뻗는다.
 
         model.addAttribute("article", article); // model에 값을 담아서 detail.html로 준다.
