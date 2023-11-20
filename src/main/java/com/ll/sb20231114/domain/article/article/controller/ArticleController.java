@@ -2,7 +2,6 @@ package com.ll.sb20231114.domain.article.article.controller;
 
 import com.ll.sb20231114.domain.article.article.entity.Article;
 import com.ll.sb20231114.domain.article.article.service.ArticleService;
-import com.ll.sb20231114.domain.member.member.entity.Member;
 import com.ll.sb20231114.domain.member.member.service.MemberService;
 import com.ll.sb20231114.global.rq.Rq;
 import jakarta.servlet.http.HttpServletRequest;
@@ -50,15 +49,6 @@ public class ArticleController {
     // 게시글 작성
     @GetMapping("/article/write")
     String showWrite() {
-        HttpServletRequest req = rq.getReq();
-
-        long loginedMemberId = rq.getLoginedMemberId();
-
-        if (loginedMemberId > 0) {
-            Member loginedMember = rq.getLoginedMember();
-            req.setAttribute("loginedMember", loginedMember); // Model에 넣는 거랑 같다.
-        }
-
         return "article/article/write";
     }
 

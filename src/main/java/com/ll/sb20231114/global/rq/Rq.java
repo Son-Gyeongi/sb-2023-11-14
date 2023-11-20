@@ -33,21 +33,24 @@ public class Rq {
     }
 
     // 로그인 된 사용자 id 가져오기, 없으면 0 반환
-    public long getLoginedMemberId() {
+    private long getMemberId() {
         return Optional
                 .ofNullable(req.getSession().getAttribute("loginedMemberId"))
                 .map(id -> (long) id)
                 .orElse(0L);
     }
 
-    // 로그인 된 멤버 찾기
-    public Member getLoginedMember() {
-        long loginedMemberId = getLoginedMemberId();
+    public boolean isLogined() {
+        return getMemberId() > 0;
+    }
 
-        if (loginedMemberId == 0) {
+    // 로그인 된 멤버 찾기
+    public Member getMember() {
+        // 로그인된 사용자가 없다면
+        if (!isLogined()) {
             return null;
         }
 
-        return memberService.findById(loginedMemberId).get();
+        return memberService.findById(getMemberId()).get();
     }
 }

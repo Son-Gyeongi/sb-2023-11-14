@@ -50,10 +50,11 @@
         <a href="/" class="btn btn-ghost text-xl">SIMPLE</a>
     </div>
     <div class="navbar-end">
-<!--        Rq 클래스에 getLoginedMember() 메서드-->
-        <a th:if="${@rq.loginedMember} != null" href="/member/me" class="btn btn-ghost text-xl">
+<!--        Rq 클래스에 isLogined() 메서드-->
+        <a th:if="${@rq.logined} != null" href="/member/me" class="btn btn-ghost text-xl">
 <!--            세션 -->
-            <span th:text="|welcome ${@rq.loginedMember.username}|"></span>
+            <!--        Rq 클래스에 getMember() 메서드-->
+            <span th:text="|welcome ${@rq.member.username}|"></span>
         </a>
     </div>
 </div>
