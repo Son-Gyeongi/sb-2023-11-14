@@ -19,9 +19,9 @@ public class ArticleRepository {
         Member member1 = memberRepository.findById(1L).get();
         Member member2 = memberRepository.findById(2L).get();
 
-        add(new Article(member1, "title1", "content1"));
-        add(new Article(member2, "title2", "content2"));
-        add(new Article(member2, "title3", "content3"));
+        articles.add(new Article(member1, "title1", "content1"));
+        articles.add(new Article(member2, "title2", "content2"));
+        articles.add(new Article(member2, "title3", "content3"));
     }};
 
     public Article save(Article article) {
