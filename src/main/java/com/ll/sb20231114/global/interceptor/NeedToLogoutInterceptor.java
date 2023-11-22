@@ -9,13 +9,13 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
 @RequiredArgsConstructor
-public class NeedToLoginInterceptor implements HandlerInterceptor {
+public class NeedToLogoutInterceptor implements HandlerInterceptor {
     private final Rq rq; // 현재 접속한 회원 의미
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        if (!rq.isLogined()) {
-            throw new RuntimeException("로그인 후 이용해주세요.");
+        if (rq.isLogined()) {
+            throw new RuntimeException("로그아웃 후 이용해주세요.");
         }
 
         return true;

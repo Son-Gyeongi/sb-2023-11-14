@@ -16,8 +16,6 @@ public class NeedToAdminInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        System.out.println("NeedToAdminInterceptor.preHandle 실행됨");
-
         List<String> authorities = rq.getSessionAttr("authorities");
 
         if (!authorities.contains("ROLE_ADMIN")) {
