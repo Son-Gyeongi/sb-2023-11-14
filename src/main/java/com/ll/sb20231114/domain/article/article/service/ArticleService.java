@@ -54,10 +54,10 @@ public class ArticleService {
     }
 
     public boolean canDelete(Member actor, Article article) {
+        if (actor == null) return false;
+
         // 관리자의 경우 사용자 게시물 삭제 허용
         if (actor.isAdmin()) return true;
-
-        if (actor == null) return false;
 
         return article.getAuthor().equals(actor);
     }
