@@ -60,7 +60,7 @@ public class Rq {
     }
 
     // 세션 추가 - 로그인
-    public void setSessionAttr(String name, Long value) {
+    public void setSessionAttr(String name, Object value) {
         req.getSession().setAttribute(name, value);
     }
 
