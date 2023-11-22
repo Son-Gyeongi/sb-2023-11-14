@@ -20,6 +20,10 @@
 
     <link rel="stylesheet" href="/resource/global.css">
     <script src="/resource/global.js"></script>
+
+<!--    csrf 추가-->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 <body>
 
@@ -46,9 +50,7 @@
                 </li>
                 <li th:if="${@rq.logined}"><a href="/member/me"><i class="fa-solid fa-user"></i> 내 정보</a></li>
                 <li th:if="${@rq.logined}">
-                    <a href="javascript:;" onclick="$(this).next().submit();"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
-<!--                   logout으로 전송된는 부분을 hidden으로 숨긴다. -->
-                    <form class="!hidden" hidden th:action="|/member/logout|" method="POST"></form>
+                    <a href="/member/logout" method="POST"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
                 </li>
             </ul>
         </div>
