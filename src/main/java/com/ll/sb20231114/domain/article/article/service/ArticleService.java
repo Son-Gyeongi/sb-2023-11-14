@@ -47,4 +47,8 @@ public class ArticleService {
         // 위에 로직은 서비스에서 할 일 save 같은 부분이 리포지터리에서 할일
         // 지금은 메모리에 담아서 저장해서 리포지터리까지 가지 않는다.
     }
+
+    public boolean canModify(Member actor, Article article) {
+        return article.getAuthor().equals(actor);
+    }
 }
