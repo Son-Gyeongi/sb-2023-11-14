@@ -35,7 +35,7 @@ public class ArticleRepository {
                 .findFirst(); // 처음에 일치하는 값을 반환
     }
 
-    public void delete(long id) {
-        articles.removeIf(article -> article.getId() == id);
+    public void delete(Article article) {
+        articles.remove(article);
     }
 }
