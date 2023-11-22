@@ -3,7 +3,6 @@ package com.ll.sb20231114.domain.article.article.repository;
 import com.ll.sb20231114.domain.article.article.entity.Article;
 import com.ll.sb20231114.domain.member.member.entity.Member;
 import com.ll.sb20231114.domain.member.member.repository.MemberRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -11,18 +10,20 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository // 빈에 등록
-@RequiredArgsConstructor
 public class ArticleRepository {
     private final MemberRepository memberRepository;
+    private final List<Article> articles = new ArrayList<>();
 
-    private final List<Article> articles = new ArrayList<>() {{
+    public ArticleRepository(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+
         Member member1 = memberRepository.findById(1L).get();
         Member member2 = memberRepository.findById(2L).get();
 
         save(new Article(member1, "title1", "content1"));
         save(new Article(member2, "title2", "content2"));
         save(new Article(member2, "title3", "content3"));
-    }};
+    }
 
     public Article save(Article article) {
         // id값 추가하기
