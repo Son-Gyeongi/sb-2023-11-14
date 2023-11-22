@@ -23,14 +23,6 @@ public class MemberController {
         return "member/member/login"; // member/member/login.html
     }
 
-    // 로그아웃 - 세션 삭제하면 된다.
-    @GetMapping("/member/logout")
-    String logout() {
-        rq.removeSessionAttr("loginedMemberId");
-
-        return rq.redirect("/article/list", "로그아웃이 되었습니다.");
-    }
-
     // 멤버 가입 GET
     @GetMapping("/member/join")
     String showJoin() {

@@ -45,7 +45,10 @@
                 <li th:unless="${@rq.logined}"><a href="/member/join"><i class="fa-solid fa-user-plus"></i> 회원가입</a>
                 </li>
                 <li th:if="${@rq.logined}"><a href="/member/me"><i class="fa-solid fa-user"></i> 내 정보</a></li>
-                <li th:if="${@rq.logined}"><a href="/member/logout"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
+                <li th:if="${@rq.logined}">
+                    <a href="javascript:;" onclick="$(this).next().submit();"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
+<!--                   logout으로 전송된는 부분을 hidden으로 숨긴다. -->
+                    <form class="!hidden" hidden th:action="|/member/logout|" method="POST"></form>
                 </li>
             </ul>
         </div>
