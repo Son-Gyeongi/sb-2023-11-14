@@ -64,6 +64,11 @@ public class Rq {
         req.getSession().setAttribute(name, value);
     }
 
+    // 세션 가져오기
+    public <T> T getSessionAttr(String name) {
+        return (T) req.getSession().getAttribute(name);
+    }
+
     // 세션 삭제 - 로그아웃
     public void removeSessionAttr(String name) {
         req.getSession().removeAttribute(name);
