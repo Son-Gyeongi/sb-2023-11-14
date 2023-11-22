@@ -2,4 +2,8 @@ server:
   port: 8020
 spring:
   thymeleaf:
-    cache: false # \uD0C0\uC784\uB9AC\uD504\uC758 \uBCC0\uACBD\uC5D0 \uB300\uD55C \uBC18\uC601\uC774 \uB290\uB9AC\uB2E4\uBA74 false\uB85C \uB044\uBA74\uB41C\uB2E4. \uC6B4\uC601\uBAA8\uB4DC\uC77C \uB54C\uB294 true \uCF1C\uC57C\uD55C\uB2E4.
+    cache: false
+  security:
+    user:
+      name: user
+      password: 123456
