@@ -7,7 +7,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,6 +45,7 @@ public class ArticleController {
     }
 
     // 게시글 작성
+    @PreAuthorize("isAuthenticated()") // 로그인한 사용자만 접근 가능
     @GetMapping("/article/write")
     String showWrite() {
         return "article/article/write";
@@ -60,8 +61,8 @@ public class ArticleController {
     }
 
     // 글쓰기 버튼 누른 후에 저장
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/article/write")
-    @SneakyThrows
     String write(@Valid WriteForm writeForm) {
         Article article = articleService.write(rq.getMember(), writeForm.title, writeForm.body);
 
@@ -69,6 +70,7 @@ public class ArticleController {
     }
 
     // 게시글 수정 이동
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/article/modify/{id}")
     String showModify(Model model, @PathVariable long id) {
         Article article = articleService.findById(id).get();
@@ -94,6 +96,7 @@ public class ArticleController {
     }
 
     // 게시글 수정
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/article/modify/{id}")
     String modify(@PathVariable long id, @Valid ModifyForm modifyForm) {
         Article article = articleService.findById(id).get();
@@ -109,6 +112,7 @@ public class ArticleController {
     }
 
     // 게시글 삭제
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/article/delete/{id}")
     String delete(@PathVariable long id) {
         Article article = articleService.findById(id).get();
