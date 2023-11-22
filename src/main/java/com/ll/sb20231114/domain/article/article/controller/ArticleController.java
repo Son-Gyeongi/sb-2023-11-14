@@ -96,7 +96,13 @@ public class ArticleController {
     // 게시글 수정
     @PostMapping("/article/modify/{id}")
     String modify(@PathVariable long id, @Valid ModifyForm modifyForm) {
-        articleService.modify(id, modifyForm.title, modifyForm.body);
+        Article article = articleService.findById(id).get();
+        // 값이 없어서 null이 오면 프로그램 뻗음
+
+        if (!articleService.canModify(rq.getMember(), article))
+            throw new RuntimeException("수정권한이 없습니다.");
+
+        articleService.modify(article, modifyForm.title, modifyForm.body);
 
         return rq.redirect("/article/list", "%d번 게시물 수정되었습니다.".formatted(id));
     }

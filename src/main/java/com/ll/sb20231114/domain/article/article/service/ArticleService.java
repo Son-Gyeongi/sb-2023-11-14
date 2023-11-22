@@ -40,8 +40,7 @@ public class ArticleService {
         articleRepository.delete(id);
     }
 
-    public void modify(long id, String title, String body) {
-        Article article = findById(id).get();
+    public void modify(Article article, String title, String body) {
         article.setTitle(title);
         article.setBody(body);
         // 위에 로직은 서비스에서 할 일 save 같은 부분이 리포지터리에서 할일
