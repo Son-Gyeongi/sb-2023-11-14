@@ -12,12 +12,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberRepository {
     // 메모리에 등록
-    private final List<Member> members = new ArrayList<>() {{
-        // 익명 클래스 생성자
-        add(new Member(1L, "user1", "1234"));
-        add(new Member(2L, "user2", "1234"));
-        add(new Member(3L, "user3", "1234"));
-    }};
+    private final List<Member> members = new ArrayList<>();
 
     // 멤버 등록
     public Member save(Member member) {
