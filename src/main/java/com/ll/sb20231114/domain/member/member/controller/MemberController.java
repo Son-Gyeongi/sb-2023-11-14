@@ -23,34 +23,6 @@ public class MemberController {
         return "member/member/login"; // member/member/login.html
     }
 
-    @Data
-    public static class LoginForm {
-        @NotBlank
-        private String username;
-        @NotBlank
-        private String password;
-    }
-
-    // 멤버 로그인 POST
-    @PostMapping("/member/login")
-    String login(@Valid LoginForm loginForm) {
-        // 멤버 찾기
-        Member member = memberService.findByUsername(loginForm.username).get();
-
-        // 유효성 검사 - 비밀번호 일치 여부 확인
-        if (!member.getPassword().equals(loginForm.password)) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다");
-        }
-
-        // 로그인 처리
-
-        // 응답에 세션 추가
-        rq.setSessionAttr("loginedMemberId", member.getId());
-        rq.setSessionAttr("authorities", member.getAuthorities());
-
-        return rq.redirect("/article/list", "로그인이 완료되었습니다.");
-    }
-
     // 로그아웃 - 세션 삭제하면 된다.
     @GetMapping("/member/logout")
     String logout() {
