@@ -154,7 +154,6 @@ MockMvc mvc 객체로 실제 HTTP 요청을 테스트할 수 있습니다.
     @DisplayName("작성자가 아니라면 수정폼을 볼 수 없다.")
     @WithUserDetails("user1")
     void t5() throws Exception {
-        // WHEN
         assertThrows(Exception.class, () -> {
             ResultActions resultActions = mvc
                     .perform(get("/article/modify/1"))
