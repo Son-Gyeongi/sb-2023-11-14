@@ -1,12 +1,14 @@
 <html layout:decorate="~{global/layout}">
 
-<head></head>
+<head>
+    <title th:text="|SIMPLE - 게시글 작성|"></title>
+</head>
 
 <body>
 
 <div layout:fragment="content">
 
-    <h1 class="font-bold mb-2"><i class="fa-solid fa-pen"></i> 글 작성</h1>
+    <h1 class="font-bold mb-2"><i class="fa-solid fa-pen"></i> 게시글 작성</h1>
 
     <form th:action class="flex flex-col gap-4" method="POST" onsubmit="submitWriteForm(this); return false;">
         <div class="form-control">
@@ -25,7 +27,7 @@
         </div>
 
         <button class="btn btn-primary btn-block" type="submit">
-            <i class="fa-solid fa-pen"></i> 글 작성
+            <i class="fa-solid fa-pen"></i> 게시글 작성
         </button>
     </form>
 
