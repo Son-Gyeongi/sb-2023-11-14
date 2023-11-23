@@ -42,7 +42,14 @@ $(function () {
         if (value) $(el).val(value);
     });
 
-    $('a[method="post"], a[method="POST"]').click(function (e) {
+    $('a[method="POST"]').click(function (e) {
+        if ($(this).attr('onclick-after')) {
+            let onclickAfter = null;
+
+            eval("onclickAfter = function() { " + $(this).attr('onclick-after') + "}");
+
+            if (!onclickAfter()) return false;
+        }
         const action = $(this).attr('href');
         const csfTokenValue = $("meta[name='_csrf']").attr("content");
 
@@ -52,5 +59,13 @@ $(function () {
         $form.submit();
 
         return false;
+    });
+
+    $('a[method="POST"][onclick]').each(function (index, el) {
+        const onclick = $(el).attr('onclick');
+
+        $(el).removeAttr('onclick');
+
+        $(el).attr('onclick-after', onclick);
     });
 });
