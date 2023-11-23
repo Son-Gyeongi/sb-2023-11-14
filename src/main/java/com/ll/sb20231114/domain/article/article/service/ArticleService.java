@@ -61,4 +61,9 @@ public class ArticleService {
 
         return article.getAuthor().equals(actor);
     }
+
+    // 마지막 게시글 조회
+    public Optional<Article> findLatest() {
+        return articleRepository.findLatest();
+    }
 }

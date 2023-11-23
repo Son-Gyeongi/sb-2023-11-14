@@ -38,4 +38,11 @@ public class ArticleRepository {
     public void delete(Article article) {
         articles.remove(article);
     }
+
+    // 마지막 게시글 조회
+    public Optional<Article> findLatest() {
+        return Optional.ofNullable(
+                articles.isEmpty() ? null : articles.getLast()
+        );
+    }
 }

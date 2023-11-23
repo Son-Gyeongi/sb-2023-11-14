@@ -12,8 +12,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -115,6 +118,35 @@ MockMvc mvc 객체로 실제 HTTP 요청을 테스트할 수 있습니다.
     }
 
     // POST /article/write
+    // 정말로 작성이 되었는지 확인하기 위해서 articleService.findLatest() 사용
+    @Test
+    @DisplayName("게시물을 작성한다.")
+    @WithUserDetails("user1")
+    void t4() throws Exception {
+        // WHEN
+        ResultActions resultActions = mvc
+                .perform(
+                        post("/article/write")
+                                .with(csrf())
+                                .param("title", "제목 new")
+                                .param("body", "내용 new")
+                )
+                .andDo(print());
+
+        // THEN
+        resultActions
+                .andExpect(status().is3xxRedirection())
+                .andExpect(handler().handlerType(ArticleController.class))
+                .andExpect(handler().methodName("write"))
+                .andExpect(redirectedUrlPattern("/article/list?msg=**"));
+
+        // 마지막 게시물 조회
+        Article article = articleService.findLatest().get();
+
+        assertThat(article.getTitle()).isEqualTo("제목 new");
+        assertThat(article.getBody()).isEqualTo("내용 new");
+    }
+
     // GET /article/modify/{id}
     // PUT /article/modify/{id}
     // DELETE /article/delete/{id}
