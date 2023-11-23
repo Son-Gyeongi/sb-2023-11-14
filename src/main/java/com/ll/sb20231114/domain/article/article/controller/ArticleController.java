@@ -13,18 +13,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor // 생성자 주입, final 붙은 필드만 생성
+@RequestMapping("/article")
 public class ArticleController {
 
     private final ArticleService articleService;
     private final Rq rq;
 
     // 게시글 리스트
-    @GetMapping("/article/list")
+    @GetMapping("/list")
     String showList(Model model) {
         List<Article> articles = articleService.findAll();
 
@@ -35,7 +37,7 @@ public class ArticleController {
     }
 
     // 상세페이지
-    @GetMapping("/article/detail/{id}")
+    @GetMapping("/detail/{id}")
     String showDetail(Model model, @PathVariable long id) {
         Article article = articleService.findById(id).get(); // Optional이면 0~1개 값이 온다. null이면 프로그램 뻗는다.
 
@@ -46,7 +48,7 @@ public class ArticleController {
 
     // 게시글 작성
     @PreAuthorize("isAuthenticated()") // 로그인한 사용자만 접근 가능
-    @GetMapping("/article/write")
+    @GetMapping("/write")
     String showWrite() {
         return "article/article/write";
     }
@@ -62,7 +64,7 @@ public class ArticleController {
 
     // 글쓰기 버튼 누른 후에 저장
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/article/write")
+    @PostMapping("/write")
     String write(@Valid WriteForm writeForm) {
         Article article = articleService.write(rq.getMember(), writeForm.title, writeForm.body);
 
@@ -71,7 +73,7 @@ public class ArticleController {
 
     // 게시글 수정 이동
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/article/modify/{id}")
+    @GetMapping("/modify/{id}")
     String showModify(Model model, @PathVariable long id) {
         Article article = articleService.findById(id).get();
         // 값이 없어서 null이 오면 프로그램 뻗음
@@ -97,7 +99,7 @@ public class ArticleController {
 
     // 게시글 수정
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/article/modify/{id}")
+    @PostMapping("/modify/{id}")
     String modify(@PathVariable long id, @Valid ModifyForm modifyForm) {
         Article article = articleService.findById(id).get();
         // 값이 없어서 null이 오면 프로그램 뻗음
@@ -113,7 +115,7 @@ public class ArticleController {
 
     // 게시글 삭제
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/article/delete/{id}")
+    @GetMapping("/delete/{id}")
     String delete(@PathVariable long id) {
         Article article = articleService.findById(id).get();
         // 값이 없어서 null이 오면 프로그램 뻗음
