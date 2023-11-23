@@ -23,11 +23,15 @@ function parseMsg(msg) {
 function toastWarning(msg) {
     const [_msg, ttl] = parseMsg(msg);
 
+    if (ttl && parseInt(ttl) < new Date().getTime()) return;
+
     toastr["warning"](msg, "경고");
 }
 
 function toastNotice(msg) {
     const [_msg, ttl] = parseMsg(msg);
+
+    if (ttl && parseInt(ttl) < new Date().getTime()) return;
 
     toastr["success"](msg, "성공");
 }
