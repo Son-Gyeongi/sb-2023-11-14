@@ -82,4 +82,33 @@ public class MemberControllerTest {
                 .andDo(print())
                 .andExpect(authenticated());
     }
+
+    // GET /member/login
+    @Test
+    @DisplayName("회원가입 폼")
+    void t4() throws Exception {
+        // WHEN
+        ResultActions resultActions = mvc
+                .perform(get("/member/join"))
+                .andDo(print());
+
+        // THEN
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(view().name("member/member/join"))
+                .andExpect(handler().handlerType(MemberController.class))
+                .andExpect(handler().methodName("showJoin"))
+                .andExpect(content().string(containsString("""
+                        회원가입
+                        """.stripIndent().trim())))
+                .andExpect(content().string(containsString("""
+                        <input type="text" name="username"
+                        """.stripIndent().trim())))
+                .andExpect(content().string(containsString("""
+                        <input type="password" name="password"
+                        """.stripIndent().trim())))
+                .andExpect(content().string(containsString("""
+                        <input type="password" name="passwordConfirm"
+                        """.stripIndent().trim())));
+    }
 }
