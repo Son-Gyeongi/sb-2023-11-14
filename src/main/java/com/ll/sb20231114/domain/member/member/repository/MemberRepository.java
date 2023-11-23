@@ -37,15 +37,22 @@ public class MemberRepository {
                 .findFirst(); // 제일 첫번째로 찾는 걸 가져온다.
     }
 
-    // 멤버 삭제
-    public void delete(long id) {
-        members.removeIf(member -> member.getId() == id);
-    }
-
     // 멤버 username으로 찾기 (1명)
     public Optional<Member> findByUsername(String username) {
         return members.stream()
                 .filter(member -> member.getUsername().equals(username))
                 .findFirst();
+    }
+
+    // 멤버 삭제
+    public void delete(long id) {
+        members.removeIf(member -> member.getId() == id);
+    }
+
+    // 마지막 멤버조회
+    public Optional<Member> findLatest() {
+        return Optional.ofNullable(
+                members.isEmpty() ? null : members.getLast()
+        );
     }
 }

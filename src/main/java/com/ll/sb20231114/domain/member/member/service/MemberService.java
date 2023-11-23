@@ -56,4 +56,8 @@ public class MemberService {
 
         // 지금은 메모리에 저장해서 리포지터리로 일을 맡길게 없다.
     }
+
+    public Optional<Member> findLatest() {
+        return memberRepository.findLatest();
+    }
 }
