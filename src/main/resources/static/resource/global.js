@@ -16,11 +16,19 @@ toastr.options = {
     hideMethod: "fadeOut"
 };
 
+function parseMsg(msg) {
+    return msg.split(";ttl=");
+}
+
 function toastWarning(msg) {
+    const [_msg, ttl] = parseMsg(msg);
+
     toastr["warning"](msg, "경고");
 }
 
 function toastNotice(msg) {
+    const [_msg, ttl] = parseMsg(msg);
+
     toastr["success"](msg, "성공");
 }
 
