@@ -17,7 +17,8 @@
     <div class="mt-2 flex gap-2 justify-center">
         <a th:if="${@articleService.canModify(@rq.member, article)}" class="btn-link"
            th:href="|/article/modify/${article.id}|">글 수정</a>
-        <a th:if="${@articleService.canDelete(@rq.member, article)}" class="btn-link"
+<!--        global.js에 동적으로 넘어가게 만들었다. 그래서 삭제 잘됨 -->
+        <a method="POST" th:if="${@articleService.canDelete(@rq.member, article)}" class="btn-link"
            onclick="return confirm('정말로 삭제하시겠습니까?');" th:href="|/article/delete/${article.id}|">
             글 삭제
         </a>

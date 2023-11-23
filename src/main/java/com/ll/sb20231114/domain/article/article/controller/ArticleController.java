@@ -115,7 +115,7 @@ public class ArticleController {
 
     // 게시글 삭제
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     String delete(@PathVariable long id) {
         Article article = articleService.findById(id).get();
         // 값이 없어서 null이 오면 프로그램 뻗음
