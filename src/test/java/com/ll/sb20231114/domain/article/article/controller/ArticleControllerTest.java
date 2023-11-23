@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -146,6 +147,18 @@ MockMvc mvc 객체로 실제 HTTP 요청을 테스트할 수 있습니다.
     }
 
     // GET /article/modify/{id}
+    @Test
+    @DisplayName("작성자가 아니라면 수정폼을 볼 수 없다.") // 실패 예시, 실패하면 테스트는 성공
+    @WithUserDetails("user1")
+    void t5() throws Exception {
+        // WHEN
+        assertThrows(Exception.class, () -> {
+            ResultActions resultActions = mvc
+                    .perform(get("/article/modify/1"))
+                    .andDo(print());
+        });
+    }
+
     // PUT /article/modify/{id}
     // DELETE /article/delete/{id}
 }
