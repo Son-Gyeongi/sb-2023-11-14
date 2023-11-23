@@ -16,8 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -73,9 +72,9 @@ MockMvc mvc 객체로 실제 HTTP 요청을 테스트할 수 있습니다.
                 .perform(get("/article/detail/1"))
                 .andDo(print());
 
+        // THEN
         Article article = articleService.findById(1L).get();
 
-        // THEN
         resultActions
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(handler().handlerType(ArticleController.class))
@@ -171,9 +170,9 @@ MockMvc mvc 객체로 실제 HTTP 요청을 테스트할 수 있습니다.
                 .perform(get("/article/modify/1"))
                 .andDo(print());
 
+        // THEN
         Article article = articleService.findById(1L).get();
 
-        // THEN
         resultActions
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(handler().handlerType(ArticleController.class))
@@ -194,5 +193,32 @@ MockMvc mvc 객체로 실제 HTTP 요청을 테스트할 수 있습니다.
     }
 
     // PUT /article/modify/{id}
+    @Test
+    @DisplayName("게시물 수정폼 처리")
+    @WithUserDetails("admin")
+    void t7() throws Exception {
+        // WHEN
+        ResultActions resultActions = mvc
+                .perform(
+                        put("/article/modify/1")
+                                .with(csrf())
+                                .param("title", "제목 new")
+                                .param("body", "내용 new")
+                )
+                .andDo(print());
+
+        // THEN
+        resultActions
+                .andExpect(status().is3xxRedirection())
+                .andExpect(handler().handlerType(ArticleController.class))
+                .andExpect(handler().methodName("modify"))
+                .andExpect(redirectedUrlPattern("/article/list?msg=**"));
+
+        Article article = articleService.findById(1L).get();
+
+        assertThat(article.getTitle()).isEqualTo("제목 new");
+        assertThat(article.getBody()).isEqualTo("내용 new");
+    }
+
     // DELETE /article/delete/{id}
 }
