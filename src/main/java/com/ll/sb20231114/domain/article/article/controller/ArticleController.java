@@ -96,7 +96,7 @@ public class ArticleController {
 
     // 게시글 수정
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/modify/{id}")
+    @PutMapping("/modify/{id}")
     String modify(@PathVariable long id, @Valid ModifyForm modifyForm) {
         Article article = articleService.findById(id).get();
         // 값이 없어서 null이 오면 프로그램 뻗음

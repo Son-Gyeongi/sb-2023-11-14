@@ -5,6 +5,8 @@
     <h1 class="font-bold mb-2"><i class="fa-regular fa-pen-to-square"></i> 글 작성</h1>
 
     <form th:action class="flex flex-col gap-4" method="POST" onsubmit="submitWriteForm(this); return false;">
+<!--        게시물 수정폼 처리에 PUT 매핑 적용 -->
+        <input type="hidden" name="_method" value="PUT">
         <div class="form-control">
             <label class="label">
                 <span class="label-text">제목</span>
