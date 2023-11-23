@@ -10,10 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -115,7 +112,7 @@ public class ArticleController {
 
     // 게시글 삭제
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     String delete(@PathVariable long id) {
         Article article = articleService.findById(id).get();
         // 값이 없어서 null이 오면 프로그램 뻗음
