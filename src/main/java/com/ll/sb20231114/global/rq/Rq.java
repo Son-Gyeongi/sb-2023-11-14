@@ -84,6 +84,10 @@ public class Rq {
 
     // 회원 권한 확인
     public boolean isAdmin() {
+        if (!isLogined()) {
+            return false;
+        }
+
         return user.getAuthorities()
                 .stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
