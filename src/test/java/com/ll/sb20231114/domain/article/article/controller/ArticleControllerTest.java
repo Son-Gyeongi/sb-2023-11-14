@@ -147,8 +147,9 @@ MockMvc mvc 객체로 실제 HTTP 요청을 테스트할 수 있습니다.
     }
 
     // GET /article/modify/{id}
+    // 실패 예시, 실패하면 테스트는 성공
     @Test
-    @DisplayName("작성자가 아니라면 수정폼을 볼 수 없다.") // 실패 예시, 실패하면 테스트는 성공
+    @DisplayName("작성자가 아니라면 수정폼을 볼 수 없다.")
     @WithUserDetails("user1")
     void t5() throws Exception {
         // WHEN
@@ -157,6 +158,39 @@ MockMvc mvc 객체로 실제 HTTP 요청을 테스트할 수 있습니다.
                     .perform(get("/article/modify/1"))
                     .andDo(print());
         });
+    }
+
+    // GET /article/modify/{id}
+    // 성공 예시
+    @Test
+    @DisplayName("게시물 수정폼 페이지를 보여준다.")
+    @WithUserDetails("admin") // admin은 1번
+    void t6() throws Exception {
+        // WHEN
+        ResultActions resultActions = mvc
+                .perform(get("/article/modify/1"))
+                .andDo(print());
+
+        Article article = articleService.findById(1L).get();
+
+        // THEN
+        resultActions
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(handler().handlerType(ArticleController.class))
+                .andExpect(handler().methodName("showModify"))
+                .andExpect(content().string(containsString("""
+                        게시글 수정
+                        """.stripIndent().trim())))
+                .andExpect(content().string(containsString("""
+                        <input type="text" name="title" value="%s"
+                        """.formatted(article.getTitle()).stripIndent().trim())))
+                .andExpect(content().string(containsString("""
+                        <textarea name="body"
+                        """.formatted(article.getBody()).stripIndent().trim())))
+                .andExpect(content().string(containsString("""
+                        >%s</textarea>
+                        """.formatted(article.getBody()).stripIndent().trim())))
+        ;
     }
 
     // PUT /article/modify/{id}
