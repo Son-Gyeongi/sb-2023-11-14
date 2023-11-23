@@ -1,5 +1,6 @@
 package com.ll.sb20231114.domain.article.article.controller;
 
+import com.ll.sb20231114.domain.article.article.entity.Article;
 import com.ll.sb20231114.domain.article.article.service.ArticleService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -59,6 +60,33 @@ MockMvc mvc 객체로 실제 HTTP 요청을 테스트할 수 있습니다.
     }
 
     // GET /article/detail/{id}
+    // 게시물 내용이 잘 작동된다고 할 수 있는 조건을 기술하시면 됩니다,
+    // 실제 1번 게시물 객체를 가져와서 둘을 대조해 보면 좋습니다.
+    @Test
+    @DisplayName("게시물 내용 페이지를 보여준다.")
+    void t2() throws Exception {
+        // WHEN
+        ResultActions resultActions = mvc
+                .perform(get("/article/detail/1"))
+                .andDo(print());
+
+        Article article = articleService.findById(1L).get();
+
+        // THEN
+        resultActions
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(handler().handlerType(ArticleController.class))
+                .andExpect(handler().methodName("showDetail"))
+                .andExpect(content().string(containsString("""
+                        게시글 내용
+                        """.stripIndent().trim())))
+                .andExpect(content().string(containsString("""
+                        <div class="badge badge-outline">1</div>
+                        """.stripIndent().trim())))
+                .andExpect(content().string(containsString(article.getTitle())))
+                .andExpect(content().string(containsString(article.getBody())));
+    }
+
     // GET /article/write
     // POST /article/write
     // GET /article/modify/{id}
