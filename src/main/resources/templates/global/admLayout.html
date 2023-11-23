@@ -1,5 +1,4 @@
 <!doctype html>
-<!-- tailwind 버전 light -->
 <html lang="ko" data-theme="light">
 <head>
     <meta charset="UTF-8">
@@ -21,14 +20,12 @@
     <link rel="stylesheet" href="/resource/global.css">
     <script src="/resource/global.js"></script>
 
-<!--    csrf 추가-->
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 <body>
 
 <link href="https://cdn.jsdelivr.net/npm/daisyui@4.0.8/dist/full.min.css" rel="stylesheet" type="text/css"/>
-<!-- tailwindcss는 body 안에 적는다. -->
 <script src="https://cdn.tailwindcss.com"></script>
 
 <div class="navbar bg-base-100">
@@ -41,15 +38,11 @@
                 </svg>
             </label>
             <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                <li><a href="/adm"><i class="fa-solid fa-gauge-high"></i> 관리자</a></li>
-                <li><a href="/article/list"><i class="fa-solid fa-list"></i> 게시물 리스트</a></li>
-                <li th:if="${@rq.logined}"><a href="/article/write"><i class="fa-solid fa-pen"></i> 게시물 작성</a></li>
-                <!--                로그인 여부에 따라 화면에 보이는 여부, unless : false일 경우 참 -->
-                <li th:unless="${@rq.logined}"><a href="/member/login"><i class="fa-solid fa-right-to-bracket"></i> 로그인</a>
+                <li>
+                    <a href="/article/list">
+                        <i class="fa-solid fa-house"></i> 사이트
+                    </a>
                 </li>
-                <li th:unless="${@rq.logined}"><a href="/member/join"><i class="fa-solid fa-user-plus"></i> 회원가입</a>
-                </li>
-                <li th:if="${@rq.logined}"><a href="/member/me"><i class="fa-solid fa-user"></i> 내 정보</a></li>
                 <li th:if="${@rq.logined}">
                     <a href="/member/logout" method="POST"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
                 </li>
@@ -57,20 +50,16 @@
         </div>
     </div>
     <div class="navbar-center">
-        <a href="/" class="btn btn-ghost text-xl">SIMPLE</a>
+        <a href="/" class="btn btn-ghost text-xl">SIMPLE ADMIN</a>
     </div>
     <div class="navbar-end">
-        <!--        Rq 클래스에 isLogined() 메서드-->
         <a th:if="${@rq.isLogined}" href="/member/me" class="btn btn-ghost text-xl">
-            <!--            세션 -->
-            <!--        Rq 클래스에 getMember() 메서드-->
             <span th:text="|welcome ${@rq.member.username}|"></span>
         </a>
     </div>
 </div>
 
 <script>
-    // 자바스크립트단에서 주소 url에 접근, ? 뒤에 queryString에 접근
     const queryParams = getQueryParams();
 
     if (queryParams.msg) {
