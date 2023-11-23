@@ -44,6 +44,9 @@ MockMvc mvc 객체로 실제 HTTP 요청을 테스트할 수 있습니다.
                 .perform(get("/article/list"))
                 .andDo(print());
 
+        // 하드코딩 대신에 articleService.findLatest() 사용
+        Article article = articleService.findLatest().get();
+
         // THEN
         resultActions
                 .andExpect(status().is2xxSuccessful())
@@ -53,14 +56,9 @@ MockMvc mvc 객체로 실제 HTTP 요청을 테스트할 수 있습니다.
                         게시글 목록
                         """.stripIndent().trim())))
                 .andExpect(content().string(containsString("""
-                        3번 : 제목3
-                        """.stripIndent().trim())))
-                .andExpect(content().string(containsString("""
-                        2번 : 제목2
-                        """.stripIndent().trim())))
-                .andExpect(content().string(containsString("""
-                        1번 : 제목1
-                        """.stripIndent().trim())));
+                        %d번 : %s
+                        """.formatted(article.getId(), article.getTitle())
+                        .stripIndent().trim())));
     }
 
     // GET /article/detail/{id}
