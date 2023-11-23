@@ -9,7 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -33,12 +35,24 @@ public class MemberControllerTest {
     @DisplayName("로그인 페이지를 보여준다")
     @WithAnonymousUser // 로그인 되지 않은 사용자
     void showLoginPage() throws Exception {
-        mvc.perform(get("/member/login"))
-                .andDo(print())
+        // When 과 Then 으로 나눔
+
+        // WHEN
+        ResultActions resultActions = mvc
+                .perform(get("/member/login"))
+                .andDo(print());
+
+        // THEN
+        resultActions
                 .andExpect(status().isOk())
                 .andExpect(view().name("member/member/login"))
-                .andExpect(handler().handlerType(MemberController.class))
-                .andExpect(handler().methodName("showLogin"));
+                .andExpect(handler().methodName("showLogin"))
+                .andExpect(content().string(containsString("""
+                        <input type="text" name="username"
+                        """.stripIndent().trim())))
+                .andExpect(content().string(containsString("""
+                        <input type="password" name="password"
+                        """.stripIndent().trim())));
     }
 
     // GET /member/join
