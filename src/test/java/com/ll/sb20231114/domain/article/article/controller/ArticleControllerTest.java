@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -88,6 +89,31 @@ MockMvc mvc 객체로 실제 HTTP 요청을 테스트할 수 있습니다.
     }
 
     // GET /article/write
+    @Test
+    @DisplayName("게시물 작성 페이지를 보여준다.")
+    @WithUserDetails("user1") // 사용자 user1이라는 가정
+    void t3() throws Exception {
+        // WHEN
+        ResultActions resultActions = mvc
+                .perform(get("/article/write"))
+                .andDo(print());
+
+        // THEN
+        resultActions
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(handler().handlerType(ArticleController.class))
+                .andExpect(handler().methodName("showWrite"))
+                .andExpect(content().string(containsString("""
+                        게시글 작성
+                        """.stripIndent().trim())))
+                .andExpect(content().string(containsString("""
+                        <input type="text" name="title"
+                        """.stripIndent().trim())))
+                .andExpect(content().string(containsString("""
+                        <textarea name="body"
+                        """.stripIndent().trim())));
+    }
+
     // POST /article/write
     // GET /article/modify/{id}
     // PUT /article/modify/{id}
