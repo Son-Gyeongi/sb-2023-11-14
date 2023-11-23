@@ -1,6 +1,5 @@
 package com.ll.sb20231114.domain.member.member.controller;
 
-import com.ll.sb20231114.domain.member.member.service.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +11,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -27,14 +27,13 @@ public class MemberControllerTest {
 
     @Autowired
     private MockMvc mvc;
-    @Autowired
-    private MemberService memberService;
 
     // GET /member/login
     @Test
     @DisplayName("로그인 페이지를 보여준다")
-    @WithAnonymousUser // 로그인 되지 않은 사용자
-    void showLoginPage() throws Exception {
+    @WithAnonymousUser
+    // 로그인 되지 않은 사용자
+    void t1() throws Exception {
         // When 과 Then 으로 나눔
 
         // WHEN
@@ -55,32 +54,32 @@ public class MemberControllerTest {
                         """.stripIndent().trim())));
     }
 
-    // GET /member/join
+    // step 33, 테스트, POST /member/login, ChatGPT 에게
+    // 로그인 폼 처리에 대한 테스트도 만들어 달라고 요청 후 작업
+
+    // POST /member/login
     @Test
-    @DisplayName("회원가입 페이지를 보여준다")
-    @WithAnonymousUser
-    void showJoinPage() throws Exception {
-        mvc.perform(get("/member/join"))
+    @DisplayName("잘못된 로그인 정보")
+    void t2() throws Exception {
+        mvc.perform(
+                        formLogin("/member/login")
+                                .user("username", "user1")
+                                .password("password", "12345")
+                )
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(view().name("member/member/join"))
-                .andExpect(handler().handlerType(MemberController.class))
-                .andExpect(handler().methodName("showJoin"));
+                .andExpect(unauthenticated());
     }
 
-    // POST /member/join
+    // POST /member/login
     @Test
-    @DisplayName("회원가입 처리")
-    @WithAnonymousUser
-    void joinMember() throws Exception {
-        mvc.perform(post("/member/join")
-                        .with(csrf())
-                        .param("username", "newuser")
-                        .param("password", "newpassword"))
+    @DisplayName("로그인 처리")
+    void t3() throws Exception {
+        mvc.perform(
+                        formLogin("/member/login")
+                                .user("username", "user1")
+                                .password("password", "1234")
+                )
                 .andDo(print())
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/member/login?msg=**"))
-                .andExpect(handler().handlerType(MemberController.class))
-                .andExpect(handler().methodName("join"));
+                .andExpect(authenticated());
     }
 }

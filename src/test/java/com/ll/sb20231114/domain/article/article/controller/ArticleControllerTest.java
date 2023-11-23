@@ -94,7 +94,8 @@ MockMvc mvc 객체로 실제 HTTP 요청을 테스트할 수 있습니다.
     // GET /article/write
     @Test
     @DisplayName("게시물 작성 페이지를 보여준다.")
-    @WithUserDetails("user1") // 사용자 user1이라는 가정
+    @WithUserDetails("user1")
+    // 사용자 user1이라는 가정
     void t3() throws Exception {
         // WHEN
         ResultActions resultActions = mvc
@@ -165,7 +166,8 @@ MockMvc mvc 객체로 실제 HTTP 요청을 테스트할 수 있습니다.
     // 성공 예시
     @Test
     @DisplayName("게시물 수정폼 페이지를 보여준다.")
-    @WithUserDetails("admin") // admin은 1번
+    @WithUserDetails("admin")
+    // admin은 1번
     void t6() throws Exception {
         // WHEN
         ResultActions resultActions = mvc
