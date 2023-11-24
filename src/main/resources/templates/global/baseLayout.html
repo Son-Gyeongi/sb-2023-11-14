@@ -37,12 +37,16 @@
         toastNotice(queryParams.msg);
     }
 
-    const historyBackMsg = localStorage.getItem('historyBackMsg');
+    // 일부 브라우저는 history.back(); 을 통해서 보여지는 페이지 에서는
+    // 초반 자바스크립트 실행이 스킵된다. 그것을 방지하기 위한 작업
+    $(window).bind("pageshow", function (event) {
+        const historyBackMsg = localStorage.getItem('historyBackMsg');
 
-    if (historyBackMsg) {
-        toastWarning(historyBackMsg);
-        localStorage.removeItem('historyBackMsg');
-    }
+        if (historyBackMsg) {
+            toastWarning(historyBackMsg);
+            localStorage.removeItem('historyBackMsg');
+        }
+    });
 </script>
 
 <main class="p-4">
