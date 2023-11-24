@@ -10,7 +10,17 @@
 
     <h1 class="font-bold mb-2"><i class="fa-solid fa-pen"></i> 게시글 작성</h1>
 
-    <form th:action class="flex flex-col gap-4" method="POST">
+    <form th:object="${articleCreateForm}" th:action class="flex flex-col gap-4" method="POST">
+
+        <div th:if="${#fields.hasAnyErrors()}" th:each="err : ${#fields.allErrors()}" role="alert"
+             class="alert alert-error">
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
+                 viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <span th:text="${err}"></span>
+        </div>
         <div class="form-control">
             <label class="label">
                 <span class="label-text">제목</span>

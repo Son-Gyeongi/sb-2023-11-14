@@ -131,21 +131,23 @@ public class ArticleController {
 
     @Data
     public static class ArticleCreateForm {
-        @NotBlank
+        @NotBlank(message = "제목을 입력해주세요.")
         private String title;
-        @NotBlank
+        @NotBlank(message = "내용을 입력해주세요.")
         private String body;
     }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/write2")
-    String showWrite2() {
+    String showWrite2(ArticleCreateForm articleCreateForm) {
         return "article/article/write2";
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/write2")
-    String write2(@Valid ArticleCreateForm form, BindingResult bindingResult) {
+    String write2(@Valid ArticleCreateForm articleCreateForm, BindingResult bindingResult) {
+        // ArticleCreateForm form 이라고 하면 안되고,
+        // ArticleCreateForm articleCreateForm 이라고 해야 한다, 에러가 있다면 출력
         if (bindingResult.hasErrors()) {
             return "article/article/write2";
         }
