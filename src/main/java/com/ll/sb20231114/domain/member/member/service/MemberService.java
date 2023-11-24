@@ -2,6 +2,7 @@ package com.ll.sb20231114.domain.member.member.service;
 
 import com.ll.sb20231114.domain.member.member.entity.Member;
 import com.ll.sb20231114.domain.member.member.repository.MemberRepository;
+import com.ll.sb20231114.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,10 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
 
     // 멤버 가입
-    public Member join(String username, String password) {
+    public RsData<Member> join(String username, String password) {
         // 회원가입 시 이미 존재하는 username 인지 체크, 만약에 중복되었다면 빈 폼을 응답
         if (findByUsername(username).isPresent()) {
-            return null;
+            return new RsData<>("F-1", "이미 존재하는 회원입니다.");
         }
 
         password = passwordEncoder.encode(password);
@@ -29,7 +30,11 @@ public class MemberService {
         // 멤버 등록
         memberRepository.save(member);
 
-        return member;
+        return new RsData<>(
+                "S-1",
+                "%s님 환영합니다".formatted(member.getUsername()),
+                member
+        );
     }
 
     // 모든 멤버 찾기

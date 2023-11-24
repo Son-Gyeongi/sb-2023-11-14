@@ -13,4 +13,12 @@ public class RsData<T> { // ResultData라는 뜻
     private final String resultCode;
     private final String msg;
     private T data;
+
+    public boolean isSuccess() {
+        return resultCode.startsWith("S-");
+    }
+
+    public boolean isFail() {
+        return isSuccess() == false;
+    }
 }
