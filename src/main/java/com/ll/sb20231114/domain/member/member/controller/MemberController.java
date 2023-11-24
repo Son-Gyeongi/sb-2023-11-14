@@ -49,6 +49,7 @@ public class MemberController {
         RsData<Member> joinRs = memberService.join(joinForm.username, joinForm.password);
 
         // 멤버 가입 GET 으로 이동
-        return rq.redirect("/member/login", joinRs.getMsg());
+        // rq.redirect (이)가 RsData 를 이해한다.
+        return rq.redirect("/member/login", joinRs);
     }
 }
