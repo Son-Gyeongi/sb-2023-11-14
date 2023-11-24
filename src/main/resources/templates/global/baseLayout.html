@@ -36,6 +36,13 @@
     if (queryParams.msg) {
         toastNotice(queryParams.msg);
     }
+
+    const historyBackMsg = localStorage.getItem('historyBackMsg');
+
+    if (historyBackMsg) {
+        toastWarning(historyBackMsg);
+        localStorage.removeItem('historyBackMsg');
+    }
 </script>
 
 <main class="p-4">
