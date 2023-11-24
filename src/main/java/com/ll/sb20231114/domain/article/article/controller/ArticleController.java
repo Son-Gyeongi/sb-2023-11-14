@@ -127,5 +127,10 @@ public class ArticleController {
 
         return rq.redirect("/", "%d번 게시물 삭제되었습니다.".formatted(id));
     }
-}
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/write2")
+    String showWrite2() {
+        return "article/article/write2";
+    }
+}
