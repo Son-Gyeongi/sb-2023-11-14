@@ -47,7 +47,7 @@ public class MemberController {
         Member member = memberService.join(joinForm.username, joinForm.password);
 
         if (member == null) {
-            return "member/member/join";
+            return "global/js";
         }
 
         // 멤버 가입 GET 으로 이동
