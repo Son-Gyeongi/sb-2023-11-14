@@ -1,5 +1,9 @@
+<script th:inline="javascript">
+<!--    global/js 에 msg 변수를 넣어서, 상황에 맞는 메세지가 history.back(); 이 실행되기 전에 alert 으로 보여지도록-->
+    const msg = /*[[${msg}]]*/ null;
+</script>
+
 <script>
-    const msg = '해당 username은 이미 사용중입니다.';
     if (msg) alert(msg);
     // 빈 폼을 응답하는 대신 history.back(); 실행 / 경고창 뜨고 이전 페이지(원래 페이지)로 이동
     history.back();
