@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -128,9 +129,27 @@ public class ArticleController {
         return rq.redirect("/", "%d번 게시물 삭제되었습니다.".formatted(id));
     }
 
+    @Data
+    public static class ArticleCreateForm {
+        @NotBlank
+        private String title;
+        @NotBlank
+        private String body;
+    }
+
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/write2")
     String showWrite2() {
         return "article/article/write2";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/write2")
+    String write2(@Valid ArticleCreateForm form, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "article/article/write2";
+        }
+
+        return "redirect:/";
     }
 }
