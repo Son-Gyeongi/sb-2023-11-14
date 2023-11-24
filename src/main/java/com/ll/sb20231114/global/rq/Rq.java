@@ -109,6 +109,10 @@ public class Rq {
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
     }
 
+    public String historyBack(RsData<?> rsData) {
+        return historyBack(rsData.getMsg());
+    }
+
     public String historyBack(String msg) {
         resp.setStatus(400);
         req.setAttribute("msg", msg);

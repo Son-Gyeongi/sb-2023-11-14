@@ -47,9 +47,9 @@ public class MemberController {
     String join(@Valid JoinForm joinForm) {
         RsData<Member> joinRs = memberService.join(joinForm.username, joinForm.password);
 
-        // memberService 가 다시 명시적인 오류결과를 리턴, 후에 나올 redirectOrBack 으로 처리하는 것을 보여드리기 위함
         if (joinRs.isFail()) {
-            return rq.historyBack(joinRs.getMsg());
+            // rq.historyBack (이)가 RsData 를 이해한다.
+            return rq.historyBack(joinRs);
         }
 
         // 멤버 가입 GET 으로 이동
