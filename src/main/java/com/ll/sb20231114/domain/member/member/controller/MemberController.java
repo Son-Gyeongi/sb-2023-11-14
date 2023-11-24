@@ -48,10 +48,6 @@ public class MemberController {
         // 컨트롤러에서 예외를 처리하지 않음, 결국 요청처리흐름이 중단됨
         RsData<Member> joinRs = memberService.join(joinForm.username, joinForm.password);
 
-        if (joinRs.isFail()) {
-            return rq.historyBack(joinRs.getMsg());
-        }
-
         // 멤버 가입 GET 으로 이동
         return rq.redirect("/member/login", joinRs.getMsg());
     }
