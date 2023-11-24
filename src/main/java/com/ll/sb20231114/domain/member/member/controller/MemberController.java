@@ -43,8 +43,12 @@ public class MemberController {
     // 멤버 가입 POST
     @PreAuthorize("isAnonymous()")
     @PostMapping("/member/join")
-    String join(@Valid MemberController.JoinForm joinForm) {
+    String join(@Valid JoinForm joinForm) {
         Member member = memberService.join(joinForm.username, joinForm.password);
+
+        if (member == null) {
+            return "member/member/join";
+        }
 
         // 멤버 가입 GET 으로 이동
         return rq.redirect("/member/login", "회원가입이 완료되었습니다.");

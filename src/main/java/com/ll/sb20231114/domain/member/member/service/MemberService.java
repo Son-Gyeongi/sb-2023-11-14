@@ -17,6 +17,11 @@ public class MemberService {
 
     // 멤버 가입
     public Member join(String username, String password) {
+        // 회원가입 시 이미 존재하는 username 인지 체크, 만약에 중복되었다면 빈 폼을 응답
+        if (findByUsername(username).isPresent()) {
+            return null;
+        }
+
         password = passwordEncoder.encode(password);
         // 객체 생성
         Member member = new Member(username, password);
