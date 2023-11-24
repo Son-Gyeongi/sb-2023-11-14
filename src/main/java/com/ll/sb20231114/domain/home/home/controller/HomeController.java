@@ -17,8 +17,8 @@ public class HomeController {
     private final Rq rq;
 
     @GetMapping("/")
-    public String goToArticleList() {
-        return "redirect:/article/list";
+    public String goToArticleList(String msg) {
+        return rq.redirect("/article/list", msg);
     }
 
     // 스프링 시큐리티의 세션 구조 확인
