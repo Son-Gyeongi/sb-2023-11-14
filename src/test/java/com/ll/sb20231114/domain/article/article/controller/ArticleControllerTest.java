@@ -139,7 +139,7 @@ MockMvc mvc 객체로 실제 HTTP 요청을 테스트할 수 있습니다.
                 .andExpect(status().is3xxRedirection())
                 .andExpect(handler().handlerType(ArticleController.class))
                 .andExpect(handler().methodName("write"))
-                .andExpect(redirectedUrlPattern("/article/list?msg=**"));
+                .andExpect(redirectedUrlPattern("/?msg=**"));
 
         // 마지막 게시물 조회
         Article article = articleService.findLatest().get();
@@ -215,7 +215,7 @@ MockMvc mvc 객체로 실제 HTTP 요청을 테스트할 수 있습니다.
                 .andExpect(status().is3xxRedirection())
                 .andExpect(handler().handlerType(ArticleController.class))
                 .andExpect(handler().methodName("modify"))
-                .andExpect(redirectedUrlPattern("/article/list?msg=**"));
+                .andExpect(redirectedUrlPattern("/?msg=**"));
 
         Article article = articleService.findById(1L).get();
 
@@ -241,7 +241,7 @@ MockMvc mvc 객체로 실제 HTTP 요청을 테스트할 수 있습니다.
                 .andExpect(status().is3xxRedirection())
                 .andExpect(handler().handlerType(ArticleController.class))
                 .andExpect(handler().methodName("delete"))
-                .andExpect(redirectedUrlPattern("/article/list?msg=**"));
+                .andExpect(redirectedUrlPattern("/?msg=**"));
 
         Optional<Article> optionalArticle = articleService.findById(1L);
 

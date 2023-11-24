@@ -65,7 +65,9 @@ public class ArticleController {
     String write(@Valid WriteForm writeForm) {
         Article article = articleService.write(rq.getMember(), writeForm.title, writeForm.body);
 
-        return rq.redirect("/article/list", "%d번 게시물 생성되었습니다.".formatted(article.getId()));
+        return rq.redirect("/", "%d번 게시물 생성되었습니다.".formatted(article.getId()));
+        //step 39, 현재 우리 사이트의 기본페이지는 /article/list 가 맞지만, / 로 이동시켜도
+        // 어차피 기본페이지로 리다이렉팅 된다. 그래서 모든 코드에서 이제 / 로 보내도록 처리
     }
 
     // 게시글 수정 이동
@@ -107,7 +109,7 @@ public class ArticleController {
 
         articleService.modify(article, modifyForm.title, modifyForm.body);
 
-        return rq.redirect("/article/list", "%d번 게시물 수정되었습니다.".formatted(id));
+        return rq.redirect("/", "%d번 게시물 수정되었습니다.".formatted(id));
     }
 
     // 게시글 삭제
@@ -123,7 +125,7 @@ public class ArticleController {
 
         articleService.delete(article);
 
-        return rq.redirect("/article/list", "%d번 게시물 삭제되었습니다.".formatted(id));
+        return rq.redirect("/", "%d번 게시물 삭제되었습니다.".formatted(id));
     }
 }
 
