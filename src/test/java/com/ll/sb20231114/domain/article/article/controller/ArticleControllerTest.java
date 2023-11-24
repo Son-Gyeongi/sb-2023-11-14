@@ -16,7 +16,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -154,11 +153,15 @@ MockMvc mvc 객체로 실제 HTTP 요청을 테스트할 수 있습니다.
     @DisplayName("작성자가 아니라면 수정폼을 볼 수 없다.")
     @WithUserDetails("user1")
     void t5() throws Exception {
-        assertThrows(Exception.class, () -> {
-            ResultActions resultActions = mvc
-                    .perform(get("/article/modify/1"))
-                    .andDo(print());
-        });
+        // WHEN
+        ResultActions resultActions = mvc
+                .perform(get("/article/modify/1"))
+                .andDo(print());
+
+        // 이제 서버의 내밀한 속사정이 그대로 클라이언트에게 보여지지 않고 오류내용이 정제(alert, history.back())되어 전달된다.
+        // THEN
+        resultActions
+                .andExpect(status().is4xxClientError());
     }
 
     // GET /article/modify/{id}
