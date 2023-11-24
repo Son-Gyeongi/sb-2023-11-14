@@ -41,10 +41,17 @@ public class Rq {
     }
 
     public String redirect(String path, String msg) {
+        // msg 를 URLEncoder 할 때 ttl 이 있다면 먼저 제거하고
+        // 인코딩 후에 다시 붙이는 방식, 그게 url 이 더 예쁘게 나온다.
         boolean containsTtl = msg.contains(";ttl=");
+
+        if (containsTtl) {
+            msg = msg.split(";ttl=", 2)[0];
+        }
+
         msg = URLEncoder.encode(msg, StandardCharsets.UTF_8);
 
-        if (!containsTtl) msg += ";ttl=" + (new Date().getTime() + 1000 * 5); // 5초 경고창 유지
+        msg += ";ttl=" + (new Date().getTime() + 1000 * 5); // 5초 경고창 유지
 
         return "redirect:" + path + "?msg=" + msg;
     }
