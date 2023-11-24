@@ -18,9 +18,9 @@ public class MemberService {
 
     // 멤버 가입
     public RsData<Member> join(String username, String password) {
-        // 회원가입 시 이미 존재하는 username 인지 체크, 만약에 중복되었다면 빈 폼을 응답
         if (findByUsername(username).isPresent()) {
-            return new RsData<>("F-1", "이미 존재하는 회원입니다.");
+            // RuntimeException 예외를 던져서 요청흐름처리를 중단
+            throw new RuntimeException("이미 존재하는 회원입니다.");
         }
 
         password = passwordEncoder.encode(password);

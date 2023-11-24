@@ -45,13 +45,17 @@ public class MemberController {
     @PreAuthorize("isAnonymous()")
     @PostMapping("/member/join")
     String join(@Valid JoinForm joinForm) {
-        RsData<Member> joinRs = memberService.join(joinForm.username, joinForm.password);
+        try {
+            RsData<Member> joinRs = memberService.join(joinForm.username, joinForm.password);
 
-        if (joinRs.isFail()) {
-            return rq.historyBack(joinRs.getMsg());
+            if (joinRs.isFail()) {
+                return rq.historyBack(joinRs.getMsg());
+            }
+
+            // 멤버 가입 GET 으로 이동
+            return rq.redirect("/member/login", joinRs.getMsg());
+        } catch (RuntimeException e) {
+            return rq.historyBack(e.getMessage());
         }
-
-        // 멤버 가입 GET 으로 이동
-        return rq.redirect("/member/login", joinRs.getMsg());
     }
 }
