@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -139,18 +138,16 @@ public class ArticleController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/write2")
-    String showWrite2(ArticleCreateForm articleCreateForm) {
+    String showWrite2() {
         return "article/article/write2";
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/write2")
-    String write2(@Valid ArticleCreateForm articleCreateForm, BindingResult bindingResult) {
-        // ArticleCreateForm form 이라고 하면 안되고,
-        // ArticleCreateForm articleCreateForm 이라고 해야 한다, 에러가 있다면 출력
-        if (bindingResult.hasErrors()) {
-            return "article/article/write2";
-        }
+    String write2(@Valid ArticleCreateForm articleCreateForm) {
+        Article article = articleService.write(rq.getMember(),
+                articleCreateForm.getTitle(),
+                articleCreateForm.getBody());
 
         return "redirect:/";
     }
