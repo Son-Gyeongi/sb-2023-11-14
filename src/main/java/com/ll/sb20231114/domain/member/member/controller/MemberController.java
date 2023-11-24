@@ -45,8 +45,12 @@ public class MemberController {
     @PreAuthorize("isAnonymous()")
     @PostMapping("/member/join")
     String join(@Valid JoinForm joinForm) {
-        // 컨트롤러에서 예외를 처리하지 않음, 결국 요청처리흐름이 중단됨
         RsData<Member> joinRs = memberService.join(joinForm.username, joinForm.password);
+
+        // memberService 가 다시 명시적인 오류결과를 리턴, 후에 나올 redirectOrBack 으로 처리하는 것을 보여드리기 위함
+        if (joinRs.isFail()) {
+            return rq.historyBack(joinRs.getMsg());
+        }
 
         // 멤버 가입 GET 으로 이동
         // rq.redirect (이)가 RsData 를 이해한다.
