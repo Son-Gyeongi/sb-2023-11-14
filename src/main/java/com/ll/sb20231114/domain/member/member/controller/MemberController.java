@@ -47,13 +47,7 @@ public class MemberController {
     String join(@Valid JoinForm joinForm) {
         RsData<Member> joinRs = memberService.join(joinForm.username, joinForm.password);
 
-        if (joinRs.isFail()) {
-            // rq.historyBack (이)가 RsData 를 이해한다.
-            return rq.historyBack(joinRs);
-        }
-
-        // 멤버 가입 GET 으로 이동
-        // rq.redirect (이)가 RsData 를 이해한다.
-        return rq.redirect("/member/login", joinRs);
+        //  redirectOrBack을 도입하여 코드를 간결하게 변경
+        return rq.redirectOrBack("/member/login", joinRs);
     }
 }

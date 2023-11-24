@@ -41,8 +41,8 @@ public class Rq {
         }
     }
 
-    public String redirect(String path, RsData<?> rsData) {
-        return redirect(path, rsData.getMsg());
+    public String redirect(String path, RsData<?> rs) {
+        return redirect(path, rs.getMsg());
     }
 
     public String redirect(String path, String msg) {
@@ -109,8 +109,8 @@ public class Rq {
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
     }
 
-    public String historyBack(RsData<?> rsData) {
-        return historyBack(rsData.getMsg());
+    public String historyBack(RsData<?> rs) {
+        return historyBack(rs.getMsg());
     }
 
     public String historyBack(String msg) {
@@ -118,5 +118,10 @@ public class Rq {
         req.setAttribute("msg", msg);
 
         return "global/js";
+    }
+
+    public String redirectOrBack(String url, RsData<?> rs) {
+        if (rs.isFail()) return historyBack(rs);
+        return redirect(url, rs);
     }
 }
