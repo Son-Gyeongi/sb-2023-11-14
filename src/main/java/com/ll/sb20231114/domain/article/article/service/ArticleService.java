@@ -5,21 +5,28 @@ import com.ll.sb20231114.domain.article.article.repository.ArticleRepository;
 import com.ll.sb20231114.domain.member.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service // 저는 단 한번만 생성되고, 그 이후에는 재사용되는 객체입니다.
 @RequiredArgsConstructor // 생성자 주입, final 붙은 필드만 생성
+@Transactional(readOnly = true)
 public class ArticleService {
 
     // null이 들어가지 않게 진짜 객체(new)를 만들어 줘야 한다.
     private final ArticleRepository articleRepository;
 
     // 게시글 작성
+    @Transactional
     public Article write(Member author, String title, String body) {
         // 객체 만들기
-        Article article = new Article(author, title, body);
+        Article article = Article.builder()
+                .author(author)
+                .title(title)
+                .body(body)
+                .build();
 
         articleRepository.save(article);
 
@@ -36,10 +43,12 @@ public class ArticleService {
         return articleRepository.findById(id);
     }
 
+    @Transactional
     public void delete(Article article) {
         articleRepository.delete(article);
     }
 
+    @Transactional
     public void modify(Article article, String title, String body) {
         article.setTitle(title);
         article.setBody(body);
@@ -64,6 +73,6 @@ public class ArticleService {
 
     // 마지막 게시글 조회
     public Optional<Article> findLatest() {
-        return articleRepository.findLatest();
+        return articleRepository.findFirstByOrderByIdDesc();
     }
 }

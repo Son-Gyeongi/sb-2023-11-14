@@ -1,17 +1,25 @@
 package com.ll.sb20231114.domain.member.member.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.List;
 
 // Member 엔티티
-@AllArgsConstructor
+@Entity
 @Getter
 @Setter
-@ToString
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode
 public class Member {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include // 값 비교를 id로 한다.
     private Long id;
     private String username;
