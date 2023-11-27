@@ -2,7 +2,6 @@ package com.ll.sb20231114.global.exceptionHandler;
 
 import com.ll.sb20231114.global.rq.Rq;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
  * @Controller에서 발생한 RuntimeException 에 대한
  * 처리로 rq.historyBack 이 실행되도록 연결
  */
-@Profile("prod")
 @ControllerAdvice(annotations = Controller.class)
 @RequiredArgsConstructor
 public class ControllerExceptionHandler {
@@ -22,6 +20,6 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public String handleException(RuntimeException ex) {
         System.out.println("ControllerExceptionHandler.handleException");
-        return rq.historyBack(ex.getMessage());
+        return rq.historyBack(ex);
     }
 }
