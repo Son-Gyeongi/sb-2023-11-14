@@ -40,4 +40,10 @@ public class HomeController {
     public String showTest1() {
         return Thread.currentThread().getName(); // http-nio-8020-exec-2, tomcat-handler-21(옵션 추가 후)
     }
+
+    @GetMapping("/home/test2") // /home/test2?name=하하
+    @ResponseBody
+    public String showTest2(String name) {
+        return name + "님 안녕하세요하하!!!";
+    }
 }
