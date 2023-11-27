@@ -4,12 +4,10 @@ import com.ll.sb20231114.global.rq.Rq;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -36,17 +34,10 @@ public class HomeController {
                 );
     }
 
-    @GetMapping("/home/test")
+    // 쓰레드 상황
+    @GetMapping("/home/test1")
     @ResponseBody
-    public Map<String, Object> showTest1() {
-        return new HashMap<>() {{
-            put("msg", "test1");
-        }};
-    }
-
-    @GetMapping("/home/test2")
-    public String showTest2(Model model) {
-        model.addAttribute("age", 20);
-        return "home/home/test2";
+    public String showTest1() {
+        return Thread.currentThread().getName(); // http-nio-8020-exec-2, tomcat-handler-21(옵션 추가 후)
     }
 }
