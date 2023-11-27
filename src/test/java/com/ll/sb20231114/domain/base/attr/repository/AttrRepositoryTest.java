@@ -16,7 +16,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @ActiveProfiles("test") // application-test.yml 가 추가적으로 실행된다.
 @Transactional // springframework에서 제공
-@Rollback
 public class AttrRepositoryTest {
 
     @Autowired
@@ -28,6 +27,7 @@ public class AttrRepositoryTest {
      */
     @DisplayName("attr 저장")
     @Test
+    @Rollback(value = false)
     void t1() {
         Attr attr = Attr.builder()
                 .createDate(LocalDateTime.now())
