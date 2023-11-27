@@ -36,6 +36,9 @@ public class ArticleController {
     // 상세페이지
     @GetMapping("/detail/{id}")
     String showDetail(Model model, @PathVariable long id) {
+        // TODO 삭제 / 예외발생 시키기
+        if (true) throw new RuntimeException("예외 발생");
+
         Article article = articleService.findById(id).get(); // Optional이면 0~1개 값이 온다. null이면 프로그램 뻗는다.
 
         model.addAttribute("article", article); // model에 값을 담아서 detail.html로 준다.
