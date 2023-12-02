@@ -9,6 +9,7 @@
 
     <h1 class="font-bold mb-2"><i class="fa-solid fa-user-plus"></i> 회원가입</h1>
 
+<!--    th:action 넣어서 csrf 토큰 만들 수 있다.-->
     <form th:action class="flex flex-col gap-4" method="POST" onsubmit="submitJoinForm(this); return false;">
         <div class="form-control">
             <label class="label">
