@@ -142,6 +142,8 @@ public class ArticleController {
         return "article/article/write2";
     }
 
+    // ArticleCreateForm에서 빈 값 없이 완벽하게 들어온다는 시나리오 /write2 GET, POST
+    // -> 그래서 자바스크립트에 form 체크만 넣어주면 된다. 그러면 굉장히 많은 작업을 안해도 된다.
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/write2")
     String write2(@Valid ArticleCreateForm articleCreateForm) {
