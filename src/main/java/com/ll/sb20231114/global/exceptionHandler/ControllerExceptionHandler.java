@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
+ * 124강, ControllerExceptionHandler 를 믿고,
+ * 오직 성공 시나리오로만 코딩을 한다. 그러면 코드가 간결해 집니다.
+ *
  * ControllerExceptionHandler 를 도입하여
  *
  * @Controller에서 발생한 RuntimeException 에 대한
