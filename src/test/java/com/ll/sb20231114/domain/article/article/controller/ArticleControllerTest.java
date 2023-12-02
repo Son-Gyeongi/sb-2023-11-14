@@ -129,7 +129,7 @@ MockMvc mvc 객체로 실제 HTTP 요청을 테스트할 수 있습니다.
         ResultActions resultActions = mvc
                 .perform(
                         post("/article/write")
-                                .with(csrf())
+                                .with(csrf()) // csrf 토큰은 보안을 위해 POST요청에 필요하다.
                                 .param("title", "제목 new")
                                 .param("body", "내용 new")
                 )
