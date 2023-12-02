@@ -1,5 +1,6 @@
 <script th:inline="javascript">
     <!--    global/js 에 msg 변수를 넣어서, 상황에 맞는 메세지가 history.back(); 이 실행되기 전에 alert 으로 보여지도록-->
+    // 외부에서 받은 파라미터를 자바스크립트에 넣으려면 이렇게 하면 된다. msg값이 있으면 나오고 없으면 null이 나온다.
     const msg = /*[[${msg}]]*/ null;
     const exStr = /*[[${exStr}]]*/ null;
 </script>

@@ -118,9 +118,10 @@ public class Rq {
         return historyBack(rs.getMsg());
     }
 
+    // 회원가입 중복시 js.html을 갔다가 뒤로가기로 다시 회원가입 폼을 보여준다.
     public String historyBack(String msg) {
         resp.setStatus(400);
-        req.setAttribute("msg", msg);
+        req.setAttribute("msg", msg); // model.addAttribute("msg", msg)하는 거랑 같다.
 
         return "global/js";
     }
