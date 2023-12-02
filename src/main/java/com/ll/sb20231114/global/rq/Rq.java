@@ -64,12 +64,13 @@ public class Rq {
         return "redirect:" + path + "?msg=" + msg;
     }
 
-    // 로그인 된 사용자 id 가져오기, 없으면 0 반환
+    // 로그인 된 사용자 username 가져오기, 없으면 0 반환
     private String getMemberUsername() {
         return user.getUsername();
     }
 
     public boolean isLogined() {
+        // 로그인된 사용자가 없다면 null이다.
         return user != null;
     }
 
@@ -81,6 +82,7 @@ public class Rq {
         }
 
         if (member == null)
+            // username으로 Member찾기
             member = memberService.findByUsername(getMemberUsername()).get();
 
         return member;
