@@ -53,7 +53,7 @@ public class Rq {
 
         boolean containsTtl = msg.contains(";ttl=");
 
-        if (containsTtl) {
+        if (containsTtl) { // ttl이 있다면 빼고 밑에서 인코딩 후 다시 붙인다.
             msg = msg.split(";ttl=", 2)[0];
         }
 
