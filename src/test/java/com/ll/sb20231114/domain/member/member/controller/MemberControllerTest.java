@@ -56,8 +56,8 @@ public class MemberControllerTest {
         // THEN
         resultActions
                 .andExpect(status().isOk())
-                .andExpect(view().name("member/member/login"))
-                .andExpect(handler().methodName("showLogin"))
+                .andExpect(view().name("member/member/login")) // 어떤 템플릿이 실행되었는지
+                .andExpect(handler().methodName("showLogin")) // 어떤 메서드가 실행되는지
                 .andExpect(content().string(containsString("""
                         <input type="text" name="username"
                         """.stripIndent().trim())))
@@ -148,6 +148,7 @@ public class MemberControllerTest {
         Member member = memberService.findLatest().get();
 
         assertThat(member.getUsername()).isEqualTo("usernew");
+        // 암호화해서 member에 가져온 password랑 비교해야한다.
         assertThat(passwordEncoder.matches("1234", member.getPassword())).isTrue();
     }
 
