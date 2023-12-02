@@ -40,6 +40,7 @@
 
     // 일부 브라우저는 history.back(); 을 통해서 보여지는 페이지 에서는
     // 초반 자바스크립트 실행이 스킵된다. 그것을 방지하기 위한 작업
+    // 그냥도 실행이 되고 javascript에서 history.bake()을 해도 실행이된다.
     $(window).bind("pageshow", function (event) {
         const historyBackMsg = localStorage.getItem('historyBackMsg');
 
