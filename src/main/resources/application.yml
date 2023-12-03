@@ -23,9 +23,10 @@ spring:
         show_sql: true
         format_sql: true
         use_sql_comments: true
+# 쿼리가 실행된 결과 출력
 logging:
   level:
     com.ll.sb20231114: DEBUG
-    org.hibernate.orm.jdbc.bind: TRACE
-    org.hibernate.orm.jdbc.extract: TRACE
-    org.springframework.transaction.interceptor: TRACE
+    org.hibernate.orm.jdbc.bind: TRACE # ?에 나오는 값 출력
+    org.hibernate.orm.jdbc.extract: TRACE # select 후 결과 출력
+    org.springframework.transaction.interceptor: TRACE # 트랜잭션 정보 출력
