@@ -5,6 +5,7 @@ import java.io.StringWriter;
 
 public class Ut {
     public static class exception {
+        // 예외를 String으로 바꿔서 넘겨준다.
         public static String toString(Exception e) {
             StringWriter sw = new StringWriter();
             e.printStackTrace(new PrintWriter(sw));
