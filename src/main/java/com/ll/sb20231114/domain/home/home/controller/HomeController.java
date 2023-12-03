@@ -34,7 +34,7 @@ public class HomeController {
                 );
     }
 
-    // 쓰레드 상황
+    // 쓰레드 상황 - 현재 이 요청을 처리하는 쓰레드를 알 수 있다.
     @GetMapping("/home/test1")
     @ResponseBody
     public String showTest1() {
